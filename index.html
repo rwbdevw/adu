@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>ADU Sertifikat Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Form Sidebar */
+        .sidebar {
+            width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .sidebar h2 {
+            color: #002b5e;
+            font-family: 'Cinzel', serif;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input, 
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, 
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #002b5e;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: #002b5e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #001a38;
+        }
+
+        /* Preview Area */
+        .preview-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            padding: 40px;
+            background-color: #f4f4f5;
+        }
+
+        .certificate {
+            width: 297mm; /* A4 Landscape */
+            height: 210mm;
+            background-color: #fffaf0;
+            padding: 20mm;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            position: relative;
+            flex-shrink: 0;
+            transform-origin: center center;
+            /* Scale down slightly to fit most screens */
+            transform: scale(0.8); 
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 10mm; left: 10mm; right: 10mm; bottom: 10mm;
+            border: 1px solid #002b5e;
+            pointer-events: none;
+        }
+        .certificate::after {
+            content: '';
+            position: absolute;
+            top: 12mm; left: 12mm; right: 12mm; bottom: 12mm;
+            border: 1px solid #d4af37;
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .university-name {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: #002b5e;
+            letter-spacing: 4px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .certificate-title {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            color: #d4af37;
+            letter-spacing: 8px;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .intro-text {
+            font-size: 14px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .recipient-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: #002b5e;
+            margin: 20px 0;
+            font-style: italic;
+            border-bottom: 1px solid #d4af37;
+            display: inline-block;
+            padding-bottom: 5px;
+            min-width: 60%;
+        }
+
+        .reason-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            max-width: 80%;
+            margin: 20px auto;
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30mm;
+            left: 30mm;
+            right: 30mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .signature-block {
+            text-align: center;
+            width: 250px;
+        }
+
+        .signature-line {
+            border-bottom: 1px solid #002b5e;
+            margin-bottom: 10px;
+            height: 40px;
+        }
+
+        .signature-title {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: #002b5e;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .date-block {
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+        }
+
+        .seal {
+            width: 110px;
+            height: 110px;
+            border: 2px dashed #d4af37;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 12px;
+            text-align: center;
+            position: absolute;
+            bottom: 22mm;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.8;
+        }
+
+        /* Print Styles - Hides sidebar, resets scale and fits A4 page perfectly */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            body {
+                display: block;
+                background-color: #fff;
+            }
+            .sidebar {
+                display: none;
+            }
+            .preview-container {
+                padding: 0;
+                background-color: transparent;
+                display: block;
+            }
+            .certificate {
+                transform: scale(1);
+                box-shadow: none;
+                margin: 0;
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar / Form -->
+    <div class="sidebar">
+        <h2>ADU Generator</h2>
+        
+        <div class="form-group">
+            <label>Hujjat turi</label>
+            <select id="docType" onchange="updateTemplate()">
+                <option value="Maqtov Yorlig'i">Maqtov Yorlig'i (Talabalar uchun)</option>
+                <option value="Tashakkurnoma">Tashakkurnoma (Xodimlar uchun)</option>
+                <option value="Sertifikat">Sertifikat (Konferensiya uchun)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>F.I.Sh (Qabul qiluvchi)</label>
+            <input type="text" id="recipientName" placeholder="Falonchiyev Pistonchi" oninput="updatePreview()">
+        </div>
+
+        <div class="form-group">
+            <label>Matn / Sabab</label>
+            <textarea id="reasonText" oninput="updatePreview()"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Qayd raqami</label>
+            <input type="text" id="regNumber" placeholder="001" oninput="updatePreview()">
+        </div>
+
+        <div class="form-group">
+            <label>Sana</label>
+            <input type="text" id="dateText" placeholder="15.05.2025" oninput="updatePreview()">
+        </div>
+
+        <div class="form-group">
+            <label>Imzolovchi (Rektor / Rais) F.I.Sh.</label>
+            <input type="text" id="rectorName" placeholder="A.A. Yuldashev" oninput="updatePreview()">
+        </div>
+
+        <button class="btn" onclick="window.print()">🖨️ PDF ga saqlash / Chop etish</button>
+    </div>
+
+    <!-- Certificate Preview Area -->
+    <div class="preview-container">
+        <div class="certificate" id="printArea">
+            <div class="header">
+                <h1 class="university-name">Andijon Davlat Universiteti</h1>
+                <h2 class="certificate-title" id="prevTitle">Maqtov Yorlig'i</h2>
+            </div>
+
+            <div class="content">
+                <p class="intro-text" id="prevIntro">Ushbu yorliq topshiriladi</p>
+                <h3 class="recipient-name" id="prevName">[Talabaning F.I.Sh.]</h3>
+                <p class="reason-text" id="prevReason">
+                    [Fakultet nomi] fakulteti, [Ta'lim yo'nalishi nomi] yo‘nalishi [Kurs raqami]-bosqich talabasiga o‘quv jarayonlarida erishgan yuksak natijalari, ilm-fanga bo‘lgan intilishi hamda universitetning ijtimoiy-ma’naviy hayotidagi faol ishtiroki va namunali xulqi uchun.
+                </p>
+            </div>
+
+            <div class="seal">ADU<br>Muhr<br>O'rni</div>
+
+            <div class="footer">
+                <div class="date-block">
+                    <p>Qayd raqami: <span id="prevReg">_______</span></p>
+                    <p>Sana: <span id="prevDate">___/___/202__</span></p>
+                    <p>Andijon shahri</p>
+                </div>
+                
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <div class="signature-title" id="prevRole">Rektor</div>
+                    <div style="font-size: 12px; margin-top: 5px; color: #333;" id="prevRector">[Rektorning F.I.Sh.]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const templates = {
+            "Maqtov Yorlig'i": {
+                intro: "Ushbu yorliq topshiriladi",
+                reason: "[Fakultet nomi] fakulteti, [Ta'lim yo'nalishi nomi] yo‘nalishi [Kurs raqami]-bosqich talabasi o‘quv jarayonlarida erishgan yuksak natijalari, ilm-fanga bo‘lgan intilishi hamda universitetning ijtimoiy-ma’naviy hayotidagi faol ishtiroki va namunali xulqi uchun.",
+                role: "Rektor"
+            },
+            "Tashakkurnoma": {
+                intro: "Ushbu tashakkurnoma bildiriladi",
+                reason: "[Kafedra yoki bo'lim nomi] [Lavozimi]ga yosh avlodga ta’lim-tarbiya berishdagi fidokorona mehnati, yuksak kasbiy mahorati hamda Andijon davlat universitetining ilmiy-pedagogik salohiyati va nufuzini oshirishga qo‘shgan munosib hissasi uchun.",
+                role: "Rektor"
+            },
+            "Sertifikat": {
+                intro: "Ushbu sertifikat tasdiqlaydi",
+                reason: "Andijon davlat universitetida o‘tkazilgan "[Konferensiya yoki tadbirning to'liq rasmiy nomi]" mavzusidagi xalqaro ilmiy-amaliy konferensiyasida o‘zining dolzarb ilmiy ma'ruzasi va munosib maqolasi bilan faol ishtirok etganligini.",
+                role: "Tashkiliy qo'mita raisi"
+            }
+        };
+
+        function updateTemplate() {
+            const docType = document.getElementById('docType').value;
+            const tpl = templates[docType];
+            
+            document.getElementById('prevTitle').innerText = docType;
+            document.getElementById('prevIntro').innerText = tpl.intro;
+            document.getElementById('reasonText').value = tpl.reason;
+            document.getElementById('prevRole').innerText = tpl.role;
+            
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const name = document.getElementById('recipientName').value || "[F.I.Sh.]";
+            const reason = document.getElementById('reasonText').value || "[Matn bu yerda paydo bo'ladi]";
+            const reg = document.getElementById('regNumber').value || "_______";
+            const date = document.getElementById('dateText').value || "___/___/202__";
+            const rector = document.getElementById('rectorName').value || "[Imzolovchining F.I.Sh.]";
+
+            document.getElementById('prevName').innerText = name;
+            document.getElementById('prevReason').innerText = reason;
+            document.getElementById('prevReg').innerText = reg;
+            document.getElementById('prevDate').innerText = date;
+            document.getElementById('prevRector').innerText = rector;
+        }
+
+        // Initialize default template
+        window.onload = () => {
+            updateTemplate();
+        };
+    </script>
+</body>
+</html>

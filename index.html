@@ -34,15 +34,15 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
+            font-weight: 600;
+            margin-bottom: 5px;
             color: #333;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .form-group input, 
@@ -67,7 +67,7 @@
 
         .form-group textarea {
             resize: vertical;
-            height: 120px;
+            height: 100px;
             line-height: 1.5;
         }
 
@@ -83,7 +83,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .btn:hover {
@@ -97,12 +97,12 @@
             justify-content: center;
             align-items: center;
             overflow: auto;
-            padding: 40px;
+            padding: 20px;
             background-color: #f4f4f5;
         }
 
         .certificate {
-            width: 297mm; /* A4 Landscape */
+            width: 297mm;
             height: 210mm;
             background-color: #fffaf0;
             padding: 20mm;
@@ -111,8 +111,7 @@
             position: relative;
             flex-shrink: 0;
             transform-origin: center center;
-            /* Scale down slightly to fit most screens */
-            transform: scale(0.8); 
+            transform: scale(0.65); /* Adjusted for better visibility */
         }
 
         .certificate::before {
@@ -168,9 +167,9 @@
 
         .recipient-name {
             font-family: 'Playfair Display', serif;
-            font-size: 48px;
+            font-size: 44px;
             color: #002b5e;
-            margin: 20px 0;
+            margin: 15px 0;
             font-style: italic;
             border-bottom: 1px solid #d4af37;
             display: inline-block;
@@ -182,7 +181,7 @@
             font-size: 16px;
             line-height: 1.8;
             color: #333;
-            max-width: 80%;
+            max-width: 85%;
             margin: 20px auto;
             text-align: justify;
             text-align-last: center;
@@ -223,6 +222,7 @@
             color: #555;
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
+            line-height: 1.6;
         }
 
         .seal {
@@ -242,9 +242,15 @@
             left: 50%;
             transform: translateX(-50%);
             opacity: 0.8;
+            overflow: hidden;
         }
 
-        /* Print Styles - Hides sidebar, resets scale and fits A4 page perfectly */
+        .seal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         @media print {
             @page {
                 size: A4 landscape;
@@ -266,23 +272,21 @@
                 transform: scale(1);
                 box-shadow: none;
                 margin: 0;
-                page-break-after: avoid;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar / Form -->
     <div class="sidebar">
         <h2>ADU Generator</h2>
         
         <div class="form-group">
             <label>Hujjat turi</label>
             <select id="docType" onchange="updateTemplate()">
-                <option value="Maqtov Yorlig'i">Maqtov Yorlig'i (Talabalar uchun)</option>
-                <option value="Tashakkurnoma">Tashakkurnoma (Xodimlar uchun)</option>
-                <option value="Sertifikat">Sertifikat (Konferensiya uchun)</option>
+                <option value="Maqtov Yorlig'i">Maqtov Yorlig'i</option>
+                <option value="Tashakkurnoma">Tashakkurnoma</option>
+                <option value="Sertifikat">Sertifikat</option>
             </select>
         </div>
 
@@ -307,14 +311,19 @@
         </div>
 
         <div class="form-group">
+            <label>Muhr (Rasm yuklash)</label>
+            <input type="file" id="sealUpload" accept="image/*" onchange="uploadSeal(event)">
+        </div>
+
+        <div class="form-group">
             <label>Imzolovchi (Rektor / Rais) F.I.Sh.</label>
             <input type="text" id="rectorName" placeholder="A.A. Yuldashev" oninput="updatePreview()">
         </div>
 
-        <button class="btn" onclick="window.print()">🖨️ PDF ga saqlash / Chop etish</button>
+        <button class="btn" onclick="window.print()">🖨️ PDF ga saqlash</button>
+        <button class="btn" style="background-color: #c0392b;" onclick="clearSettings()">🗑️ Tozalash</button>
     </div>
 
-    <!-- Certificate Preview Area -->
     <div class="preview-container">
         <div class="certificate" id="printArea">
             <div class="header">
@@ -324,13 +333,13 @@
 
             <div class="content">
                 <p class="intro-text" id="prevIntro">Ushbu yorliq topshiriladi</p>
-                <h3 class="recipient-name" id="prevName">[Talabaning F.I.Sh.]</h3>
+                <h3 class="recipient-name" id="prevName">[F.I.Sh.]</h3>
                 <p class="reason-text" id="prevReason">
-                    [Fakultet nomi] fakulteti, [Ta'lim yo'nalishi nomi] yo‘nalishi [Kurs raqami]-bosqich talabasiga o‘quv jarayonlarida erishgan yuksak natijalari, ilm-fanga bo‘lgan intilishi hamda universitetning ijtimoiy-ma’naviy hayotidagi faol ishtiroki va namunali xulqi uchun.
+                    Fakultet nomi fakulteti, talabasiga o‘quv jarayonlarida erishgan yuksak natijalari va namunali xulqi uchun.
                 </p>
             </div>
 
-            <div class="seal">ADU<br>Muhr<br>O'rni</div>
+            <div class="seal" id="prevSeal">ADU<br>Muhr<br>O'rni</div>
 
             <div class="footer">
                 <div class="date-block">
@@ -342,7 +351,7 @@
                 <div class="signature-block">
                     <div class="signature-line"></div>
                     <div class="signature-title" id="prevRole">Rektor</div>
-                    <div style="font-size: 12px; margin-top: 5px; color: #333;" id="prevRector">[Rektorning F.I.Sh.]</div>
+                    <div style="font-size: 13px; margin-top: 5px; color: #333; font-weight: 600;" id="prevRector">[F.I.Sh.]</div>
                 </div>
             </div>
         </div>
@@ -357,12 +366,12 @@
             },
             "Tashakkurnoma": {
                 intro: "Ushbu tashakkurnoma bildiriladi",
-                reason: "[Kafedra yoki bo'lim nomi] [Lavozimi]ga yosh avlodga ta’lim-tarbiya berishdagi fidokorona mehnati, yuksak kasbiy mahorati hamda Andijon davlat universitetining ilmiy-pedagogik salohiyati va nufuzini oshirishga qo‘shgan munosib hissasi uchun.",
+                reason: "[Kafedra yoki bo'lim nomi] [Lavozimi]ga yosh avlodga ta’lim-tarbiya berishdagi fidokorona mehnati, yuksak kasbiy mahorati hamda Andijon davlat universitetining nufuzini oshirishga qo‘shgan munosib hissasi uchun.",
                 role: "Rektor"
             },
             "Sertifikat": {
                 intro: "Ushbu sertifikat tasdiqlaydi",
-                reason: "Andijon davlat universitetida o‘tkazilgan "[Konferensiya yoki tadbirning to'liq rasmiy nomi]" mavzusidagi xalqaro ilmiy-amaliy konferensiyasida o‘zining dolzarb ilmiy ma'ruzasi va munosib maqolasi bilan faol ishtirok etganligini.",
+                reason: "Andijon davlat universitetida o‘tkazilgan konferensiyada o‘zining dolzarb ilmiy ma'ruzasi va munosib maqolasi bilan faol ishtirok etganligini.",
                 role: "Tashkiliy qo'mita raisi"
             }
         };
@@ -384,18 +393,70 @@
             const reason = document.getElementById('reasonText').value || "[Matn bu yerda paydo bo'ladi]";
             const reg = document.getElementById('regNumber').value || "_______";
             const date = document.getElementById('dateText').value || "___/___/202__";
-            const rector = document.getElementById('rectorName').value || "[Imzolovchining F.I.Sh.]";
+            const rector = document.getElementById('rectorName').value || "[F.I.Sh.]";
+            const docType = document.getElementById('docType').value;
 
             document.getElementById('prevName').innerText = name;
             document.getElementById('prevReason').innerText = reason;
             document.getElementById('prevReg').innerText = reg;
             document.getElementById('prevDate').innerText = date;
             document.getElementById('prevRector').innerText = rector;
+
+            // Save to localStorage
+            const data = {
+                docType, name, reason, reg, date, rector
+            };
+            localStorage.setItem('adu_data', JSON.stringify(data));
         }
 
-        // Initialize default template
+        function uploadSeal(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const sealDiv = document.getElementById('prevSeal');
+                    sealDiv.innerHTML = `<img src="${e.target.result}">`;
+                    sealDiv.style.border = 'none';
+                    localStorage.setItem('adu_seal', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearSettings() {
+            if (confirm("Barcha ma'lumotlarni tozalashni xohlaysizmi?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
         window.onload = () => {
-            updateTemplate();
+            const savedData = localStorage.getItem('adu_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('docType').value = data.docType;
+                document.getElementById('recipientName').value = data.name;
+                document.getElementById('reasonText').value = data.reason;
+                document.getElementById('regNumber').value = data.reg;
+                document.getElementById('dateText').value = data.date;
+                document.getElementById('rectorName').value = data.rector;
+                
+                const tpl = templates[data.docType];
+                document.getElementById('prevTitle').innerText = data.docType;
+                document.getElementById('prevIntro').innerText = tpl.intro;
+                document.getElementById('prevRole').innerText = tpl.role;
+            } else {
+                updateTemplate();
+            }
+
+            const savedSeal = localStorage.getItem('adu_seal');
+            if (savedSeal) {
+                const sealDiv = document.getElementById('prevSeal');
+                sealDiv.innerHTML = `<img src="${savedSeal}">`;
+                sealDiv.style.border = 'none';
+            }
+
+            updatePreview();
         };
     </script>
 </body>

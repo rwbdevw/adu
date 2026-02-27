@@ -177,7 +177,7 @@
                             </label>
                             <input type="file" id="excelUpload" accept=".xlsx, .xls, .csv" onchange="updateFileLabel(this, 'lbl-batch'); handleExcel(event)">
                         </div>
-                        <p class="batch-hint" id="ui-batchHint">Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.</p>
+                        <p class="batch-hint text-xs" id="ui-batchHint" style="font-size: 11px; margin-top: 5px; color: #64748b;">Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.<br>* <b style="color:var(--primary-color)">Yangi:</b> Matnlarni sichqonchada (yoki ALT bosib) surib joyini o'zgartirishingiz mumkin.</p>
                         <div style="margin-top: 15px; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 15px;">
                             <button class="btn btn-primary" onclick="addBlankCertificate()" id="ui-btn-addBatch" style="width: 100%; background: #0f172a; border:none; color: white;">➕ Hujjat qo'shish</button>
                         </div>
@@ -187,17 +187,15 @@
             </div> <!-- End Sidebar Content -->
 
 
-            <div class="sidebar-footer" style="padding: 10px 20px 0; border-top: none;">
-                <div class="form-grid-2" style="margin-bottom: 10px;">
-                    <button class="btn btn-secondary" onclick="saveDraft()" id="ui-btn-draftSave" style="margin:0; font-size:12px; padding: 10px;">💾 Qoralamani Saqlash (.adu)</button>
-                    <div class="file-upload-wrapper" style="margin:0;">
-                        <label for="draftUpload" class="btn btn-secondary" id="ui-btn-draftLoad" style="margin:0; font-size:12px; padding: 10px; width: 100%; text-align: center; display: block;">📂 Qoralama Yuklash</label>
+            <div class="sidebar-footer" style="padding: 15px 20px; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; border-top: 1px dashed var(--border-color);">
+                <div class="form-grid-2" style="align-items: stretch;">
+                    <button class="btn btn-secondary" onclick="saveDraft()" id="ui-btn-draftSave" style="margin:0; font-size:11px; padding: 12px 8px; line-height: 1.4; text-align: center; height: 100%;">💾<br>Qoralamani Saqlash</button>
+                    <div class="file-upload-wrapper" style="margin:0; height: 100%;">
+                        <label for="draftUpload" class="btn btn-secondary" id="ui-btn-draftLoad" style="margin:0; font-size:11px; padding: 12px 8px; line-height: 1.4; height: 100%; width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer;">📂<br>Qoralama Yuklash</label>
                         <input type="file" id="draftUpload" accept=".adu" onchange="loadDraft(event)" style="display: none;">
                     </div>
                 </div>
-            </div>
-            <div class="sidebar-footer">
-                <button class="btn btn-danger" onclick="clearSettings()" id="ui-btn-clear" style="width: 100%; margin: 0;">🗑️ Keshni Tozalash / Reset</button>
+                <button class="btn" onclick="clearSettings()" id="ui-btn-clear" style="width: 100%; margin: 0; background: #fff; color: #ef4444; border: 1px solid #fecaca; box-shadow: var(--shadow-sm); font-size: 13px;">🗑️ Keshni Tozalash / Reset</button>
             </div>
         </aside>
 
@@ -231,21 +229,21 @@
         // Data and Translation Logic
         const i18n = {
             uz: { uni: "Andijon Davlat Universiteti", city: "Andijon shahri", regLabel: "Qayd raqami", dateLabel: "Sana", namePlaceholder: "[F.I.Sh.]", signerPlaceholder: "[Rektor F.I.Sh.]",
-                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.\n* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.", btnAdd: "➕ Hujjat qo'shish" },
+                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.<br>* <b style='color:var(--primary-color)'>Yangi:</b> Matnlarni sichqonchada (yoki ALT bosib) surib joyini o'zgartirishingiz mumkin.", btnAdd: "➕ Hujjat qo'shish", localBgBtn: "🖼 Shaxsiy fon", removeBgBtn: "🗑 O'chirish" },
                 types: { "Maqtov Yorlig'i": { title: "Maqtov Yorlig'i", intro: "Ushbu yorliq topshiriladi", role: "Rektor", reason: "[Fakultet nomi] fakulteti talabasi o‘quv jarayonlarida erishgan yuksak natijalari va namunali xulqi uchun." },
                          "Tashakkurnoma": { title: "Tashakkurnoma", intro: "Ushbu tashakkurnoma bildiriladi", role: "Rektor", reason: "[Kafedra nomi] xodimiga universitet nufuzini oshirishga qo‘shgan munosib hissasi uchun." },
                          "Sertifikat": { title: "Sertifikat", intro: "Ushbu sertifikat tasdiqlaydi", role: "Raisi", reason: "Universitetda o‘tkazilgan konferensiyada o‘zining ilmiy ma'ruzasi bilan faol ishtirok etganligini." } },
                 templates: { "klassik": "Klassik (Rasmiy)", "zamonaviy": "Zamonaviy (Gradient)", "minimal": "Minimal (Toza)" }
             },
             ru: { uni: "Андижанский Государственный Университет", city: "город Андижан", regLabel: "Рег. номер", dateLabel: "Дата", namePlaceholder: "[Ф.И.О.]", signerPlaceholder: "[Ф.И.О. Ректора]",
-                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.\n* Должность, Организация опциональны.", btnAdd: "➕ Добавить документ" },
+                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.<br>* Должность, Организация опциональны.<br>* <b style='color:var(--primary-color)'>Новое:</b> Перемещайте текст мышью (зажав ALT).", btnAdd: "➕ Добавить документ", localBgBtn: "🖼 Личный фон", removeBgBtn: "🗑 Удалить" },
                 types: { "Maqtov Yorlig'i": { title: "Похвальная грамота", intro: "Награждается", role: "Ректор", reason: "Студент [факультета] за высокие достижения в учебном процессе и образцовое поведение." },
                          "Tashakkurnoma": { title: "Благодарственное письмо", intro: "Выражается благодарность", role: "Ректор", reason: "Сотруднику [отдела] за достойный вклад в повышение престижа университета." },
                          "Sertifikat": { title: "Сертификат", intro: "Настоящий сертификат подтверждает", role: "Председатель", reason: "Активное участие в конференции со своим научным докладом." } },
                 templates: { "klassik": "Классический (Офиц.)", "zamonaviy": "Современный", "minimal": "Минималистичный" }
             },
             en: { uni: "Andijan State University", city: "Andijan city", regLabel: "Reg. No", dateLabel: "Date", namePlaceholder: "[Full Name]", signerPlaceholder: "[Signer Name]",
-                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.\n* Title, Org are optional/defaulted.", btnAdd: "➕ Add Document" },
+                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.<br>* Title, Org are optional/defaulted.<br>* <b style='color:var(--primary-color)'>New:</b> Move texts freely by dragging (Hold ALT).", btnAdd: "➕ Add Document", localBgBtn: "🖼 Custom BG", removeBgBtn: "🗑 Remove" },
                 types: { "Maqtov Yorlig'i": { title: "Certificate of Merit", intro: "This certificate is awarded to", role: "Rector", reason: "Student of [faculty] for outstanding achievements in education and exemplary behavior." },
                          "Tashakkurnoma": { title: "Appreciation Letter", intro: "This letter is presented to", role: "Rector", reason: "Staff member for contribution to the university's prestige and development." },
                          "Sertifikat": { title: "Certificate", intro: "This is to certify that", role: "Chairman", reason: "Has actively participated in the conference with a scientific report." } },
@@ -293,7 +291,7 @@
             document.getElementById('ui-gPersonal').innerText = ui.gPersonal;
             document.getElementById('ui-gConfirm').innerText = ui.gConfirm;
             document.getElementById('ui-gBatch').innerText = ui.gBatch;
-            document.getElementById('ui-batchHint').innerText = ui.batchHint;
+            document.getElementById('ui-batchHint').innerHTML = ui.batchHint;
 
             if(document.getElementById('ui-lblSeal')) document.getElementById('ui-lblSeal').innerText = ui.lblSeal;
             if(document.getElementById('ui-lblSig')) document.getElementById('ui-lblSig').innerText = ui.lblSig;
@@ -392,6 +390,7 @@
                 const sf = Math.min(Math.max(scale, 0.4), 1);
 
                 cert.style.transform = `scale(${sf})`;
+                cert.dataset.scale = sf;
                 const h = isPort ? 297 * 3.779527 : 210 * 3.779527; // mm to px
                 const diff = h - (h*sf);
                 cert.style.marginBottom = `-${diff - 50}px`;
@@ -435,37 +434,54 @@
             const certTemplate = data.template || document.getElementById('certTemplate').value || 'klassik';
             const certFormat = data.format || document.getElementById('certFormat').value || 'landscape';
             div.className = `certificate template-${certTemplate} format-${certFormat}`;
+            div.style.position = "relative";
 
             const sealImg = localStorage.getItem('adu_v3_seal');
             const sigImg = localStorage.getItem('adu_v3_sig');
-            const bgImg = localStorage.getItem('adu_v3_bg');
+            const globalBg = localStorage.getItem('adu_v3_bg');
+            const localBgImg = data.localBg;
+            const displayBg = localBgImg || globalBg;
             const nameFontCSS = data.nameFont ? `font-family: ${data.nameFont} !important;` : '';
 
+            // Using data tag on element to store local custom bg
+            if (localBgImg) div.dataset.localBg = localBgImg;
+
+            const t = l.ui;
+
             div.innerHTML = `
-                ${bgImg ? `<div class="custom-bg-layer" style="background-image: url('${bgImg}');"></div>` : ''}
-                <div class="header">
+                ${displayBg ? `<div class="custom-bg-layer" style="background-image: url('${displayBg}');"></div>` : ''}
+
+                <div class="cert-local-actions" data-html2canvas-ignore="true">
+                    <label title="Ushbu sertifikat uchun boshqa fon yuklash" class="local-bg-btn" style="color:inherit">
+                        ${t.localBgBtn}
+                        <input type="file" style="display:none;" accept="image/*" onchange="uploadLocalBg(event, this)">
+                    </label>
+                    ${localBgImg ? `<button onclick="removeLocalBg(this)" class="local-bg-remove-btn">${t.removeBgBtn}</button>` : ''}
+                </div>
+
+                <div class="header drag-element">
                     ${data.uni ? `<h1 class="university-name" contenteditable="true" spellcheck="false">${data.uni}</h1>` : ''}
                     <h2 class="certificate-title" contenteditable="true" spellcheck="false">${typeOpts.title}</h2>
                 </div>
                 <div class="content">
                     <div class="intro-text" contenteditable="true" spellcheck="false">${typeOpts.intro}</div>
-                    <div class="recipient-name" contenteditable="true" spellcheck="false" style="${nameFontCSS}">${data.name}</div>
-                    <div class="reason-text" contenteditable="true" spellcheck="false">${data.reason}</div>
+                    <div class="recipient-name drag-element" contenteditable="true" spellcheck="false" style="${nameFontCSS}">${data.name}</div>
+                    <div class="reason-text drag-element" contenteditable="true" spellcheck="false">${data.reason}</div>
                 </div>
 
-                <div class="seal">
+                <div class="seal drag-element">
                     ${sealImg ? `<img src="${sealImg}">` : 'MUHR<br>O\'RNI'}
                 </div>
 
                 <div class="footer">
-                    <div class="left-footer">
+                    <div class="left-footer drag-element">
                         <div class="qrcode-container"><canvas></canvas></div>
                         <div class="date-block">
                             <p>${l.regLabel}: <b contenteditable="true" spellcheck="false">${data.reg}</b></p>
                             <p>${l.dateLabel}: <b contenteditable="true" spellcheck="false">${data.date}</b></p>
                         </div>
                     </div>
-                    <div class="signature-block">
+                    <div class="signature-block drag-element">
                         <div class="signature-line">
                             ${sigImg ? `<img src="${sigImg}" class="signature-image">` : ''}
                         </div>
@@ -477,18 +493,85 @@
 
             // QRous (Unicode capable generator)
             const qrCanvas = div.querySelector('canvas');
-            const qrDataStr = `Oliygoh: ${data.uni || 'Tashkilot'}\nEgasi: ${data.name}\n${l.regLabel}: ${data.reg}`;
-            new QRious({
-                element: qrCanvas,
-                value: qrDataStr,
-                size: 200,
-                level: 'M'
-            });
+            try {
+                const docType = document.getElementById('docType').value;
+                const verifyData = {
+                    u: data.uni || 'Tashkilot',
+                    n: data.name || '',
+                    r: data.reg || '',
+                    d: data.date || '',
+                    t: docType
+                };
+                const encodedData = btoa(encodeURIComponent(JSON.stringify(verifyData)));
+                const verifyUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'verify.html?v=' + encodedData;
+
+                new QRious({
+                    element: qrCanvas,
+                    value: verifyUrl,
+                    size: 200,
+                    level: 'M'
+                });
+            } catch(e) { console.error("QR generation error:", e); }
+
             // ensure drawn size respects HTML constraints
             qrCanvas.style.width = '100%';
             qrCanvas.style.height = '100%';
 
             return div;
+        }
+
+        // --- LOCAL CERTIFICATE BACKGROUND LOGIC ---
+        function uploadLocalBg(event, inputElement) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const certElement = inputElement.closest('.certificate');
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64 = e.target.result;
+                certElement.dataset.localBg = base64;
+
+                let bgLayer = certElement.querySelector('.custom-bg-layer');
+                if(!bgLayer) {
+                    bgLayer = document.createElement('div');
+                    bgLayer.className = 'custom-bg-layer';
+                    certElement.insertBefore(bgLayer, certElement.firstChild);
+                }
+                bgLayer.style.backgroundImage = `url('${base64}')`;
+
+                let actionsContainer = certElement.querySelector('.cert-local-actions');
+                let removeBtn = actionsContainer.querySelector('.local-bg-remove-btn');
+                const t = i18n[currentLang].ui;
+                if(!removeBtn) {
+                     removeBtn = document.createElement('button');
+                     removeBtn.className = "local-bg-remove-btn";
+                     removeBtn.innerHTML = t.removeBgBtn;
+                     removeBtn.onclick = function() { removeLocalBg(this); };
+                     actionsContainer.appendChild(removeBtn);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeLocalBg(btnElement) {
+            const certElement = btnElement.closest('.certificate');
+            delete certElement.dataset.localBg;
+            certElement.removeAttribute('data-local-bg');
+
+            const globalBg = localStorage.getItem('adu_v3_bg');
+            let bgLayer = certElement.querySelector('.custom-bg-layer');
+            if (globalBg) {
+                if(bgLayer) {
+                    bgLayer.style.backgroundImage = `url('${globalBg}')`;
+                } else {
+                     bgLayer = document.createElement('div');
+                     bgLayer.className = 'custom-bg-layer';
+                     certElement.insertBefore(bgLayer, certElement.firstChild);
+                     bgLayer.style.backgroundImage = `url('${globalBg}')`;
+                }
+            } else {
+                if(bgLayer) bgLayer.remove();
+            }
+            btnElement.remove();
         }
 
         function handleExcel(event) {
@@ -669,7 +752,8 @@
                     rector: rectorDiv ? rectorDiv.innerText : item.rector,
                     template: item.template || document.getElementById('certTemplate').value || 'klassik',
                     format: item.format || document.getElementById('certFormat').value || 'landscape',
-                    nameFont: item.nameFont || document.getElementById('nameFont').value || ''
+                    nameFont: item.nameFont || document.getElementById('nameFont').value || '',
+                    localBg: cert.dataset.localBg || item.localBg || null
                 });
             });
             return currentData;
@@ -861,17 +945,39 @@
                     const regBlock = certDef.querySelector('.date-block p:first-child b');
                     const reg = regBlock ? regBlock.innerText : '';
 
+                    const dateBlockNode = certDef.querySelector('.date-block p:last-child b');
+                    const dateText = dateBlockNode ? dateBlockNode.innerText : '';
                     const qrCanvas = certDef.querySelector('canvas');
                     if (qrCanvas) {
-                        const l = i18n[currentLang];
-                        const qrDataStr = `Oliygoh: ${uni}\nEgasi: ${name}\n${l.regLabel}: ${reg}`;
-                        new QRious({
-                            element: qrCanvas,
-                            value: qrDataStr,
-                            size: 200,
-                            level: 'M'
-                        });
+                        try {
+                            const l = i18n[currentLang];
+                            const docType = document.getElementById('docType').value;
+
+                            // Create data object for verification
+                            const verifyData = {
+                                u: uni,          // university
+                                n: name,         // name
+                                r: reg,          // reg number
+                                d: dateText,     // date
+                                t: docType       // type of document
+                            };
+
+                            // Encode data to base64 to make it look like a secure hash
+                            const encodedData = btoa(encodeURIComponent(JSON.stringify(verifyData)));
+
+                            // Create verification URL (Assuming the site is hosted where index.html is)
+                            // We use a relative path so it works on any domain where the project is deployed
+                            const verifyUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'verify.html?v=' + encodedData;
+
+                            new QRious({
+                                element: qrCanvas,
+                                value: verifyUrl,
+                                size: 200,
+                                level: 'M'
+                            });
+                        } catch(e) { console.error("QR xatosi:", e); }
                     }
+
                 }
             }
         });
@@ -902,6 +1008,88 @@
             changeLanguage();
             window.addEventListener('resize', updateScale);
         };
+
+        // --- GLOBAL DRAG & DROP AND AUTO-RESIZE LOGIC ---
+        let activeDragElement = null;
+        let dragStartX = 0, dragStartY = 0;
+        let initialDragX = 0, initialDragY = 0;
+
+        document.getElementById('previewContainer').addEventListener('mousedown', function(e) {
+            const el = e.target.closest('.drag-element');
+            if (!el) return;
+
+            // Text qismlarini faqat ALT/CTRL bosilganda surishga ruxsat, muhrlar (rasmlar) doim suriluradi.
+            const isText = e.target.hasAttribute('contenteditable') || el.hasAttribute('contenteditable') || e.target.closest('[contenteditable="true"]');
+
+            if (!isText || e.altKey || e.ctrlKey || e.shiftKey) {
+                if (isText) e.preventDefault();
+
+                activeDragElement = el;
+                const certScale = parseFloat(el.closest('.certificate').dataset.scale) || 1;
+
+                dragStartX = e.clientX / certScale;
+                dragStartY = e.clientY / certScale;
+
+                initialDragX = parseFloat(el.dataset.dragX) || 0;
+                initialDragY = parseFloat(el.dataset.dragY) || 0;
+
+                // Eski origin element joylashuvini saqlab qolish
+                if (el.dataset.origTransform === undefined) {
+                    const comp = getComputedStyle(el).transform;
+                    el.dataset.origTransform = (comp && comp !== 'none') ? comp : '';
+                }
+
+                el.style.cursor = 'grabbing';
+                if(getComputedStyle(el).position === 'static'){
+                    el.style.position = 'relative';
+                }
+                el.style.zIndex = "50";
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (activeDragElement) {
+                const certScale = parseFloat(activeDragElement.closest('.certificate').dataset.scale) || 1;
+
+                const dx = (e.clientX / certScale) - dragStartX;
+                const dy = (e.clientY / certScale) - dragStartY;
+
+                const newX = initialDragX + dx;
+                const newY = initialDragY + dy;
+
+                activeDragElement.dataset.dragX = newX;
+                activeDragElement.dataset.dragY = newY;
+
+                // Translate yordamida o'zgartirish (eski joyidan siljitish)
+                activeDragElement.style.transform = `${activeDragElement.dataset.origTransform} translate(${newX}px, ${newY}px)`;
+            }
+        });
+
+        document.addEventListener('mouseup', function(e) {
+            if (activeDragElement) {
+                activeDragElement.style.cursor = '';
+                activeDragElement.style.zIndex = '';
+                activeDragElement = null;
+            }
+        });
+
+        function applyAutoResize(container) {
+            const names = container.querySelectorAll('.recipient-name');
+            names.forEach(nameEl => {
+                let currentSize = 50;
+                nameEl.style.fontSize = currentSize + 'px';
+                while (nameEl.scrollWidth > nameEl.offsetWidth && currentSize > 20) {
+                    currentSize -= 2;
+                    nameEl.style.fontSize = currentSize + 'px';
+                }
+            });
+        }
+
+        const originalUpdateScale = updateScale;
+        updateScale = function() {
+            originalUpdateScale();
+            applyAutoResize(document.getElementById('previewContainer'));
+        }
     </script>
 </body>
 </html>

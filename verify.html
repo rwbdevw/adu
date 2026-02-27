@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikatni Tasdiqlash - ADU</title>
+    <!-- Use Tailwind CSS dynamically to make design fast and beautiful -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .cert-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .cert-card:hover {
+            transform: translateY(-5px);
+        }
+        .verified-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -40px auto 20px;
+            border: 4px solid white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .pulse-animation {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .header-bg {
+            background-color: #0f172a;
+            position: relative;
+            height: 150px;
+        }
+
+        .header-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .data-row:last-child {
+            border-bottom: none;
+        }
+        .data-label { color: #64748b; font-size: 0.875rem; font-weight: 500; }
+        .data-value { color: #0f172a; font-weight: 600; text-align: right; max-width: 60%; }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Navbar Minimal -->
+    <div class="fixed top-0 left-0 w-full bg-white shadow-sm flex items-center px-6 py-4 z-50">
+        <div class="font-bold text-slate-800 text-lg flex items-center gap-3">
+            <span class="bg-slate-900 text-white w-8 h-8 rounded-md flex items-center justify-center font-serif">A</span>
+            ADU Rasmiy Tizimi
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-md mt-16 mb-8">
+
+        <!-- UI: Initial Loading State -->
+        <div id="loadingState" class="cert-card w-full">
+            <div class="h-32 bg-slate-200 skeleton"></div>
+            <div class="p-6 pt-12 relative text-center">
+                <div class="w-20 h-20 rounded-full bg-slate-300 skeleton mx-auto absolute -top-10 left-1/2 -translate-x-1/2 border-4 border-white"></div>
+                <div class="h-6 bg-slate-200 skeleton w-3/4 mx-auto mb-4 rounded"></div>
+                <div class="h-4 bg-slate-200 skeleton w-full mx-auto mb-2 rounded"></div>
+                <div class="h-4 bg-slate-200 skeleton w-4/5 mx-auto rounded"></div>
+            </div>
+        </div>
+
+        <!-- UI: Success State -->
+        <div id="successState" class="cert-card w-full hidden">
+            <!-- Header Background Area -->
+            <div class="header-bg flex flex-col items-center justify-center text-white p-6 text-center">
+                <h1 class="text-xl font-bold tracking-wider uppercase opacity-90" id="resUniversity">Muassasa Nomi</h1>
+                <p class="text-xs opacity-60 mt-1 uppercase tracking-widest">Rasmiy Tasdiqlanuvchi Tizimi</p>
+            </div>
+
+            <div class="p-6 relative">
+                <!-- Verified Badge -->
+                <div class="verified-badge pulse-animation">
+                    <i class="fa-solid fa-check text-4xl"></i>
+                </div>
+
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-1">Hujjat Tasdiqlangan</h2>
+                    <p class="text-emerald-600 font-medium text-sm"><i class="fa-solid fa-shield-halved mr-1"></i> Asl nusxasi (Original)</p>
+                </div>
+
+                <!-- Document Details -->
+                <div class="bg-slate-50 rounded-lg p-5 border border-slate-100 flex flex-col gap-1">
+                    <div class="data-row">
+                        <span class="data-label">Qabul qiluvchi</span>
+                        <span class="data-value text-indigo-700 font-bold text-base" id="resName">Ismi Familiyasi</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Hujjat turi</span>
+                        <span class="data-value" id="resType">Sertifikat turi</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Qayd raqami (Reg. No)</span>
+                        <span class="data-value font-mono bg-slate-200 px-2 py-0.5 rounded text-xs" id="resReg">RAQAM</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Sana</span>
+                        <span class="data-value" id="resDate">Sana qiymati</span>
+                    </div>
+                </div>
+
+                <!-- Footer Text -->
+                <div class="mt-8 text-center border-t border-slate-100 pt-5">
+                    <p class="text-xs text-slate-500 mb-2">Ushbu ma'lumot qat'iyan QR-shifr orqali taqdim etilgan validatsiya blokiga tegishli. Uni qayta takrorlash yoki qalbaki nusxasi tarqatish qonun bilan taqiqlanadi.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- UI: Error State -->
+        <div id="errorState" class="cert-card w-full hidden border-t-8 border-red-500">
+            <div class="p-8 text-center">
+                <div class="w-20 h-20 rounded-full bg-red-100 text-red-500 flex items-center justify-center mx-auto mb-5">
+                    <i class="fa-solid fa-xmark text-4xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">Xatolik</h2>
+                <p class="text-slate-600">Keçirasiz, ushbu QR kodda sertifikat ma'lumotlari mavjud emas yoki u buzilgan bo'lishi mumkin.</p>
+                <button onclick="window.history.back()" class="mt-6 px-6 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-md font-medium transition-colors">
+                    Orqaga qaytish
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-slate-400 text-xs text-center mt-auto pb-6">
+        &copy; 2026 ADU Hujjatlar Generatori & Tasdiqlash Tizimi
+    </footer>
+
+    <!-- Logic Script for Decoding -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Simulate network delay for verification effect
+            setTimeout(() => {
+                verifyCertificate();
+            }, 800);
+        });
+
+        function verifyCertificate() {
+            const loadingUI = document.getElementById('loadingState');
+            const successUI = document.getElementById('successState');
+            const errorUI = document.getElementById('errorState');
+
+            try {
+                // Get URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const encodedData = urlParams.get('v');
+
+                if (!encodedData) {
+                    throw new Error("Missing verification code");
+                }
+
+                // Decode base64 and parse JSON
+                const decodedString = decodeURIComponent(atob(encodedData));
+                const data = JSON.parse(decodedString);
+
+                // Check if valid structure exists
+                if (!data || typeof data !== 'object') {
+                    throw new Error("Invalid format");
+                }
+
+                // Populate data to DOM
+                document.getElementById('resUniversity').textContent = data.u || "TASHKILOT";
+                document.getElementById('resName').textContent = data.n || "Nomalum";
+                document.getElementById('resType').textContent = data.t || "Hujjat";
+                document.getElementById('resReg').textContent = data.r || "---";
+                document.getElementById('resDate').textContent = data.d || "---";
+
+                // Switch UI views
+                loadingUI.classList.add('hidden');
+                successUI.classList.remove('hidden');
+
+            } catch (err) {
+                console.error("Verification failed:", err);
+
+                // Switch UI views to Error
+                loadingUI.classList.add('hidden');
+                errorUI.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

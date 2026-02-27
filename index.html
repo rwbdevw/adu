@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sertifikat Gen Pro - Dashboard</title>
     <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Great+Vibes&family=Montserrat:wght@400;600;800&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <!-- Link to our 10/10 SaaS Style -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -66,6 +70,38 @@
                     <div class="form-row" style="margin-top: 16px;">
                         <label id="ui-uniName">Muassasa nomi (Ixtiyoriy)</label>
                         <input type="text" id="uniName" placeholder="..." oninput="updateSinglePreview()">
+                    </div>
+
+                    <!-- NEW: Typography & Format & Bg Image -->
+                    <div class="form-grid-2" style="margin-top: 16px;">
+                        <div class="form-row">
+                            <label id="ui-format">Hujjat Formati</label>
+                            <select id="certFormat" onchange="updateSinglePreview()">
+                                <option value="landscape" id="ui-fmLand">Landscape (Eniga)</option>
+                                <option value="portrait" id="ui-fmPort">Portrait (Bo'yiga)</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label id="ui-nameFont">Ism Shrifti</label>
+                            <select id="nameFont" onchange="updateSinglePreview()">
+                                <option value="" id="ui-fnDef">Standart</option>
+                                <option value="'Playfair Display', serif">Playfair Display</option>
+                                <option value="'Great Vibes', cursive">Great Vibes</option>
+                                <option value="'Pinyon Script', cursive">Pinyon Script</option>
+                                <option value="'Cormorant Garamond', serif">Garamond</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="margin-top: 16px;">
+                        <label id="ui-cusBg">Maxsus Orqa Fon Rasmi</label>
+                        <div class="file-upload-wrapper">
+                            <label for="bgUpload" class="file-upload-label" id="lbl-bg"><span id="ui-lblBg">📂 Surat (.jpg, .png)</span></label>
+                            <input type="file" id="bgUpload" accept="image/*" onchange="updateFileLabel(this, 'lbl-bg'); uploadImage(event, 'bg')">
+                        </div>
+                        <p style="margin: 5px 0 0; font-size: 11px; color:#64748b; text-align:right;">
+                            <a href="#" onclick="clearCustomBg(); return false;" id="ui-clearBg" style="color:var(--primary-color);">Fonni o'chirish / Reset</a>
+                        </p>
                     </div>
                 </div>
 
@@ -150,6 +186,16 @@
 
             </div> <!-- End Sidebar Content -->
 
+
+            <div class="sidebar-footer" style="padding: 10px 20px 0; border-top: none;">
+                <div class="form-grid-2" style="margin-bottom: 10px;">
+                    <button class="btn btn-secondary" onclick="saveDraft()" id="ui-btn-draftSave" style="margin:0; font-size:12px; padding: 10px;">💾 Qoralamani Saqlash (.adu)</button>
+                    <div class="file-upload-wrapper" style="margin:0;">
+                        <label for="draftUpload" class="btn btn-secondary" id="ui-btn-draftLoad" style="margin:0; font-size:12px; padding: 10px; width: 100%; text-align: center; display: block;">📂 Qoralama Yuklash</label>
+                        <input type="file" id="draftUpload" accept=".adu" onchange="loadDraft(event)" style="display: none;">
+                    </div>
+                </div>
+            </div>
             <div class="sidebar-footer">
                 <button class="btn btn-danger" onclick="clearSettings()" id="ui-btn-clear" style="width: 100%; margin: 0;">🗑️ Keshni Tozalash / Reset</button>
             </div>
@@ -168,6 +214,11 @@
                     <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     PDF qilib saqlash
                 </button>
+                <button class="btn btn-primary" onclick="downloadZIP()" id="ui-btn-zip" style="background: #15803d; border: none;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    ZIP Rasm Qilib Saqlash
+                </button>
+
             </div>
 
             <!-- The generated certificates will be injected here -->
@@ -180,21 +231,21 @@
         // Data and Translation Logic
         const i18n = {
             uz: { uni: "Andijon Davlat Universiteti", city: "Andijon shahri", regLabel: "Qayd raqami", dateLabel: "Sana", namePlaceholder: "[F.I.Sh.]", signerPlaceholder: "[Rektor F.I.Sh.]",
-                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.\n* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.", btnAdd: "➕ Hujjat qo'shish" },
+                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.\n* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.", btnAdd: "➕ Hujjat qo'shish" },
                 types: { "Maqtov Yorlig'i": { title: "Maqtov Yorlig'i", intro: "Ushbu yorliq topshiriladi", role: "Rektor", reason: "[Fakultet nomi] fakulteti talabasi o‘quv jarayonlarida erishgan yuksak natijalari va namunali xulqi uchun." },
                          "Tashakkurnoma": { title: "Tashakkurnoma", intro: "Ushbu tashakkurnoma bildiriladi", role: "Rektor", reason: "[Kafedra nomi] xodimiga universitet nufuzini oshirishga qo‘shgan munosib hissasi uchun." },
                          "Sertifikat": { title: "Sertifikat", intro: "Ushbu sertifikat tasdiqlaydi", role: "Raisi", reason: "Universitetda o‘tkazilgan konferensiyada o‘zining ilmiy ma'ruzasi bilan faol ishtirok etganligini." } },
                 templates: { "klassik": "Klassik (Rasmiy)", "zamonaviy": "Zamonaviy (Gradient)", "minimal": "Minimal (Toza)" }
             },
             ru: { uni: "Андижанский Государственный Университет", city: "город Андижан", regLabel: "Рег. номер", dateLabel: "Дата", namePlaceholder: "[Ф.И.О.]", signerPlaceholder: "[Ф.И.О. Ректора]",
-                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.\n* Должность, Организация опциональны.", btnAdd: "➕ Добавить документ" },
+                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.\n* Должность, Организация опциональны.", btnAdd: "➕ Добавить документ" },
                 types: { "Maqtov Yorlig'i": { title: "Похвальная грамота", intro: "Награждается", role: "Ректор", reason: "Студент [факультета] за высокие достижения в учебном процессе и образцовое поведение." },
                          "Tashakkurnoma": { title: "Благодарственное письмо", intro: "Выражается благодарность", role: "Ректор", reason: "Сотруднику [отдела] за достойный вклад в повышение престижа университета." },
                          "Sertifikat": { title: "Сертификат", intro: "Настоящий сертификат подтверждает", role: "Председатель", reason: "Активное участие в конференции со своим научным докладом." } },
                 templates: { "klassik": "Классический (Офиц.)", "zamonaviy": "Современный", "minimal": "Минималистичный" }
             },
             en: { uni: "Andijan State University", city: "Andijan city", regLabel: "Reg. No", dateLabel: "Date", namePlaceholder: "[Full Name]", signerPlaceholder: "[Signer Name]",
-                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.\n* Title, Org are optional/defaulted.", btnAdd: "➕ Add Document" },
+                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.\n* Title, Org are optional/defaulted.", btnAdd: "➕ Add Document" },
                 types: { "Maqtov Yorlig'i": { title: "Certificate of Merit", intro: "This certificate is awarded to", role: "Rector", reason: "Student of [faculty] for outstanding achievements in education and exemplary behavior." },
                          "Tashakkurnoma": { title: "Appreciation Letter", intro: "This letter is presented to", role: "Rector", reason: "Staff member for contribution to the university's prestige and development." },
                          "Sertifikat": { title: "Certificate", intro: "This is to certify that", role: "Chairman", reason: "Has actively participated in the conference with a scientific report." } },
@@ -248,6 +299,9 @@
             if(document.getElementById('ui-lblSig')) document.getElementById('ui-lblSig').innerText = ui.lblSig;
             if(document.getElementById('ui-lblExcel')) document.getElementById('ui-lblExcel').innerText = ui.lblExcel;
             if(document.getElementById('ui-btn-addBatch')) document.getElementById('ui-btn-addBatch').innerText = ui.btnAdd;
+            if(document.getElementById('ui-btn-draftSave')) document.getElementById('ui-btn-draftSave').innerText = ui.btnDraftSave;
+            if(document.getElementById('ui-btn-draftLoad')) document.getElementById('ui-btn-draftLoad').innerText = ui.btnDraftLoad;
+            if(document.getElementById('ui-btn-zip')) document.getElementById('ui-btn-zip').innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> ` + ui.zipDownload;
 
 
             // Tugmalardagi iconlarni saqlab faqat matnni o'zgartirish uchun
@@ -329,16 +383,16 @@
             if (!area || !container) return;
             const certs = document.querySelectorAll('.certificate');
             if(certs.length === 0) return;
-            // Bizning yangi platforma dizaynida har doim 30-40px padding bor right area da
             const availWidth = area.clientWidth - 80;
-            // scale nisbatini shunga moslaymiz. Asl qog'oz eni 1122.5px ga teng (297mm)
-            const scale = availWidth / 1150;
-            const sf = Math.min(Math.max(scale, 0.4), 1);
 
             certs.forEach(cert => {
+                const isPort = cert.classList.contains('format-portrait');
+                const baseW = isPort ? 794 : 1150;
+                const scale = availWidth / baseW;
+                const sf = Math.min(Math.max(scale, 0.4), 1);
+
                 cert.style.transform = `scale(${sf})`;
-                // element marginini scale ga moslashtirish zix yopishib qolmasligi uchun
-                const h = 210 * 3.7795275591; // mm to px
+                const h = isPort ? 297 * 3.779527 : 210 * 3.779527; // mm to px
                 const diff = h - (h*sf);
                 cert.style.marginBottom = `-${diff - 50}px`;
             });
@@ -355,7 +409,9 @@
                 date: document.getElementById('dateText').value || "26.02.2025",
                 rectorTitle: document.getElementById('rectorTitle').value,
                 rector: document.getElementById('rectorName').value || l.signerPlaceholder,
-                template: document.getElementById('certTemplate').value || 'klassik'
+                template: document.getElementById('certTemplate').value || 'klassik',
+                format: document.getElementById('certFormat').value || 'landscape',
+                nameFont: document.getElementById('nameFont').value || ''
             };
 
             const container = document.getElementById('previewContainer');
@@ -366,6 +422,7 @@
             localStorage.setItem('adu_v3_data', JSON.stringify({
                 lang: currentLang, docType: document.getElementById('docType').value,
                 template: dataObj.template, uni: dataObj.uni, rectorTitle: dataObj.rectorTitle,
+                format: dataObj.format, nameFont: dataObj.nameFont,
                 name: dataObj.name, reason: dataObj.reason, reg: dataObj.reg, date: dataObj.date, rector: dataObj.rector
             }));
         }
@@ -376,19 +433,23 @@
 
             const div = document.createElement('div');
             const certTemplate = data.template || document.getElementById('certTemplate').value || 'klassik';
-            div.className = `certificate template-${certTemplate}`;
+            const certFormat = data.format || document.getElementById('certFormat').value || 'landscape';
+            div.className = `certificate template-${certTemplate} format-${certFormat}`;
 
             const sealImg = localStorage.getItem('adu_v3_seal');
             const sigImg = localStorage.getItem('adu_v3_sig');
+            const bgImg = localStorage.getItem('adu_v3_bg');
+            const nameFontCSS = data.nameFont ? `font-family: ${data.nameFont} !important;` : '';
 
             div.innerHTML = `
+                ${bgImg ? `<div class="custom-bg-layer" style="background-image: url('${bgImg}');"></div>` : ''}
                 <div class="header">
                     ${data.uni ? `<h1 class="university-name" contenteditable="true" spellcheck="false">${data.uni}</h1>` : ''}
                     <h2 class="certificate-title" contenteditable="true" spellcheck="false">${typeOpts.title}</h2>
                 </div>
                 <div class="content">
                     <div class="intro-text" contenteditable="true" spellcheck="false">${typeOpts.intro}</div>
-                    <div class="recipient-name" contenteditable="true" spellcheck="false">${data.name}</div>
+                    <div class="recipient-name" contenteditable="true" spellcheck="false" style="${nameFontCSS}">${data.name}</div>
                     <div class="reason-text" contenteditable="true" spellcheck="false">${data.reason}</div>
                 </div>
 
@@ -481,6 +542,20 @@
             reader.readAsDataURL(file);
         }
 
+        function clearCustomBg() {
+            if(confirm("Haqiqatdan ham shaxsiy rasmni o'chirasizmi?")) {
+                localStorage.removeItem('adu_v3_bg');
+                document.getElementById('lbl-bg').innerHTML = `<span id="ui-lblBg">📂 Surat (.png, .jpg)</span>`;
+                if(!batchData) updateSinglePreview();
+                else {
+                    const container = document.getElementById('previewContainer');
+                    container.innerHTML = '';
+                    batchData.forEach(item => container.appendChild(createCertificateElement(item)));
+                    updateScale();
+                }
+            }
+        }
+
         function clearSettings() {
             if (confirm("Haqiqatdan kesh va kiritilgan ma'lumotlarni tozalaysizmi?")) {
                 localStorage.clear();
@@ -524,12 +599,13 @@
                 }
             });
 
+            const isFirstPort = certs[0] && certs[0].classList.contains('format-portrait');
             const opt = {
                 margin:       0,
                 filename:     'Sertifikatlar_ADU.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: isFirstPort ? 'portrait' : 'landscape' },
                 pagebreak:    { mode: 'css' }
             };
 
@@ -562,6 +638,175 @@
         }
 
 
+
+        function getLiveBatchData() {
+            if (!batchData) {
+                return [getLiveFormData()];
+            }
+
+            // Re-read current UI states dynamically
+            const container = document.getElementById('previewContainer');
+            const certs = container.querySelectorAll('.certificate');
+            const currentData = [];
+
+            certs.forEach((cert, index) => {
+                const uniTitle = cert.querySelector('.university-name');
+                const nameDiv = cert.querySelector('.recipient-name');
+                const regBlock = cert.querySelector('.date-block p:first-child b');
+                const dateBlock = cert.querySelector('.date-block p:last-child b');
+                const reasonDiv = cert.querySelector('.reason-text');
+                const titleDiv = cert.querySelector('.signature-title');
+                const rectorDiv = cert.querySelector('.rector-name');
+
+                const item = batchData[index] || {};
+                currentData.push({
+                    uni: uniTitle ? uniTitle.innerText : item.uni,
+                    name: nameDiv ? nameDiv.innerText : item.name,
+                    reg: regBlock ? regBlock.innerText : item.reg,
+                    date: dateBlock ? dateBlock.innerText : item.date,
+                    reason: reasonDiv ? reasonDiv.innerText : item.reason,
+                    rectorTitle: titleDiv ? titleDiv.innerText : item.rectorTitle,
+                    rector: rectorDiv ? rectorDiv.innerText : item.rector,
+                    template: item.template || document.getElementById('certTemplate').value || 'klassik',
+                    format: item.format || document.getElementById('certFormat').value || 'landscape',
+                    nameFont: item.nameFont || document.getElementById('nameFont').value || ''
+                });
+            });
+            return currentData;
+        }
+
+        function saveDraft() {
+            const dataToSave = {
+                lang: currentLang,
+                color: document.getElementById('primaryColor').value,
+                seal: localStorage.getItem('adu_v3_seal'),
+                sig: localStorage.getItem('adu_v3_sig'),
+                bg: localStorage.getItem('adu_v3_bg'),
+                data: getLiveBatchData()
+            };
+
+            const blob = new Blob([JSON.stringify(dataToSave)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Sertifikat_Qoralama_${new Date().getTime()}.adu`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function loadDraft(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.lang) {
+                        document.getElementById('lang').value = parsed.lang;
+                        changeLanguage();
+                    }
+                    if (parsed.color) {
+                        document.getElementById('primaryColor').value = parsed.color;
+                        document.documentElement.style.setProperty('--primary-color', parsed.color);
+                    }
+                    if (parsed.seal) localStorage.setItem('adu_v3_seal', parsed.seal);
+                    if (parsed.sig) localStorage.setItem('adu_v3_sig', parsed.sig);
+
+                    if (parsed.data && parsed.data.length > 0) {
+                        batchData = parsed.data;
+                        const container = document.getElementById('previewContainer');
+                        container.innerHTML = '';
+                        batchData.forEach(item => {
+                            container.appendChild(createCertificateElement(item));
+                        });
+                        updateScale();
+                    }
+                } catch(err) {
+                    alert("Fayl formati noto'g'ri yoki buzilgan!");
+                    console.error(err);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // Reset input
+        }
+
+        async function downloadZIP() {
+            if (typeof JSZip === 'undefined' || typeof html2canvas === 'undefined') {
+                return alert("Kutib turing, kutubxonalar yuklanmoqda...");
+            }
+
+            const btn = document.getElementById('ui-btn-zip');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `⏳ Kuting...`;
+            btn.disabled = true;
+
+            const container = document.getElementById('previewContainer');
+            const origStyle = container.getAttribute('style');
+
+            container.style.display = 'block';
+            container.style.padding = '30px';
+            container.style.background = '#fff';
+            container.style.gap = '50px';
+            container.style.height = 'auto';
+            container.style.overflow = 'visible';
+
+            const certs = document.querySelectorAll('.certificate');
+            const zip = new JSZip();
+            const imgFolder = zip.folder("Sertifikatlar");
+
+            for (let i = 0; i < certs.length; i++) {
+                const c = certs[i];
+                c.dataset.origTransform = c.style.transform;
+                c.dataset.origMarginBottom = c.style.marginBottom;
+                c.style.transform = 'none';
+                c.style.boxShadow = 'none';
+                c.style.margin = '0 auto';
+                c.style.height = '209mm';
+
+                const canvas = await html2canvas(c, { scale: 2, useCORS: true, logging: false });
+                const imgData = canvas.toDataURL("image/jpeg", 0.98).replace(/^data:image\/(png|jpeg);base64,/, "");
+
+                let sName = c.querySelector('.recipient-name')?.innerText?.trim() || "Sertifikat";
+                sName = sName.replace(/[^a-zA-Z0-9_Ѐ-ӿ'`]/g, '_'); // sanitize filename
+                imgFolder.file(`${sName}_${i+1}.jpg`, imgData, {base64: true});
+            }
+
+            try {
+                const content = await zip.generateAsync({type:"blob"});
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "Sertifikatlar_ADU.zip";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (e) {
+                console.error("ZIP yaratishda xatolik:", e);
+                alert("ZIP yuklashda xatolik bo'ldi.");
+            }
+
+            // Revert styles
+            if (origStyle) {
+                container.setAttribute('style', origStyle);
+            } else {
+                container.removeAttribute('style');
+            }
+            certs.forEach(c => {
+                c.style.transform = c.dataset.origTransform;
+                c.style.marginBottom = c.dataset.origMarginBottom;
+                c.style.boxShadow = '';
+                c.style.margin = '';
+                c.style.height = '';
+            });
+            updateScale();
+
+            btn.innerHTML = originalHTML;
+            btn.disabled = false;
+        }
+
         function getLiveFormData() {
             const l = i18n[currentLang];
             return {
@@ -572,7 +817,9 @@
                 date: document.getElementById('dateText').value || "26.02.2025",
                 rectorTitle: document.getElementById('rectorTitle').value || l.types[document.getElementById('docType').value].role,
                 rector: document.getElementById('rectorName').value || l.signerPlaceholder,
-                template: document.getElementById('certTemplate').value || 'klassik'
+                template: document.getElementById('certTemplate').value || 'klassik',
+                format: document.getElementById('certFormat').value || 'landscape',
+                nameFont: document.getElementById('nameFont').value || ''
             };
         }
 
@@ -647,6 +894,8 @@
                     if (ls.rectorTitle !== undefined) document.getElementById('rectorTitle').value = ls.rectorTitle;
                     if (ls.uni !== undefined) document.getElementById('uniName').value = ls.uni;
                     if (ls.template) document.getElementById('certTemplate').value = ls.template;
+                    if (ls.format) document.getElementById('certFormat').value = ls.format;
+                    if (ls.nameFont) document.getElementById('nameFont').value = ls.nameFont;
                 }
             } catch (e) {}
 

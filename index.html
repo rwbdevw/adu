@@ -148,6 +148,7 @@
 
                     <div class="form-grid-2">
                         <div class="form-row">
+                        <div class="form-row">
                             <label id="ui-seal">Muhr Yuklash</label>
                             <div class="file-upload-wrapper">
                                 <label for="sealUpload" class="file-upload-label" id="lbl-seal"><span id="ui-lblSeal">📂 Muhr (.png)</span></label>
@@ -160,6 +161,13 @@
                                 <label for="sigUpload" class="file-upload-label" id="lbl-sig"><span id="ui-lblSig">📂 Imzo (.png)</span></label>
                                 <input type="file" id="sigUpload" accept="image/*" onchange="updateFileLabel(this, 'lbl-sig'); uploadImage(event, 'sig')">
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top: 12px;">
+                        <label id="ui-logo">Tashkilot Logotipi (Ixtiyoriy)</label>
+                        <div class="file-upload-wrapper">
+                            <label for="logoUpload" class="file-upload-label" id="lbl-logo"><span id="ui-lblLogo">🖼 Logo (.png)</span></label>
+                            <input type="file" id="logoUpload" accept="image/*" onchange="updateFileLabel(this, 'lbl-logo'); uploadImage(event, 'logo')">
                         </div>
                     </div>
                 </div>
@@ -229,21 +237,21 @@
         // Data and Translation Logic
         const i18n = {
             uz: { uni: "Andijon Davlat Universiteti", city: "Andijon shahri", regLabel: "Qayd raqami", dateLabel: "Sana", namePlaceholder: "[F.I.Sh.]", signerPlaceholder: "[Rektor F.I.Sh.]",
-                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.<br>* <b style='color:var(--primary-color)'>Yangi:</b> Matnlarni sichqonchada (yoki ALT bosib) surib joyini o'zgartirishingiz mumkin.", btnAdd: "➕ Hujjat qo'shish", localBgBtn: "🖼 Shaxsiy fon", removeBgBtn: "🗑 O'chirish" },
+                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblLogo: "🖼 Logo (.png)", logo: "Tashkilot Logotipi (Ixtiyoriy)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.<br>* <b style='color:var(--primary-color)'>Yangi:</b> Matnlarni sichqonchada (yoki ALT bosib) surib joyini o'zgartirishingiz mumkin.", btnAdd: "➕ Hujjat qo'shish", localBgBtn: "🖼 Shaxsiy fon", removeBgBtn: "🗑 O'chirish" },
                 types: { "Maqtov Yorlig'i": { title: "Maqtov Yorlig'i", intro: "Ushbu yorliq topshiriladi", role: "Rektor", reason: "[Fakultet nomi] fakulteti talabasi o‘quv jarayonlarida erishgan yuksak natijalari va namunali xulqi uchun." },
                          "Tashakkurnoma": { title: "Tashakkurnoma", intro: "Ushbu tashakkurnoma bildiriladi", role: "Rektor", reason: "[Kafedra nomi] xodimiga universitet nufuzini oshirishga qo‘shgan munosib hissasi uchun." },
                          "Sertifikat": { title: "Sertifikat", intro: "Ushbu sertifikat tasdiqlaydi", role: "Raisi", reason: "Universitetda o‘tkazilgan konferensiyada o‘zining ilmiy ma'ruzasi bilan faol ishtirok etganligini." } },
                 templates: { "klassik": "Klassik (Rasmiy)", "zamonaviy": "Zamonaviy (Gradient)", "minimal": "Minimal (Toza)" }
             },
             ru: { uni: "Андижанский Государственный Университет", city: "город Андижан", regLabel: "Рег. номер", dateLabel: "Дата", namePlaceholder: "[Ф.И.О.]", signerPlaceholder: "[Ф.И.О. Ректора]",
-                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.<br>* Должность, Организация опциональны.<br>* <b style='color:var(--primary-color)'>Новое:</b> Перемещайте текст мышью (зажав ALT).", btnAdd: "➕ Добавить документ", localBgBtn: "🖼 Личный фон", removeBgBtn: "🗑 Удалить" },
+                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblLogo: "🖼 Логотип (.png)", logo: "Логотип Организации (Опция)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.<br>* Должность, Организация опциональны.<br>* <b style='color:var(--primary-color)'>Новое:</b> Перемещайте текст мышью (зажав ALT).", btnAdd: "➕ Добавить документ", localBgBtn: "🖼 Личный фон", removeBgBtn: "🗑 Удалить" },
                 types: { "Maqtov Yorlig'i": { title: "Похвальная грамота", intro: "Награждается", role: "Ректор", reason: "Студент [факультета] за высокие достижения в учебном процессе и образцовое поведение." },
                          "Tashakkurnoma": { title: "Благодарственное письмо", intro: "Выражается благодарность", role: "Ректор", reason: "Сотруднику [отдела] за достойный вклад в повышение престижа университета." },
                          "Sertifikat": { title: "Сертификат", intro: "Настоящий сертификат подтверждает", role: "Председатель", reason: "Активное участие в конференции со своим научным докладом." } },
                 templates: { "klassik": "Классический (Офиц.)", "zamonaviy": "Современный", "minimal": "Минималистичный" }
             },
             en: { uni: "Andijan State University", city: "Andijan city", regLabel: "Reg. No", dateLabel: "Date", namePlaceholder: "[Full Name]", signerPlaceholder: "[Signer Name]",
-                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.<br>* Title, Org are optional/defaulted.<br>* <b style='color:var(--primary-color)'>New:</b> Move texts freely by dragging (Hold ALT).", btnAdd: "➕ Add Document", localBgBtn: "🖼 Custom BG", removeBgBtn: "🗑 Remove" },
+                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblLogo: "🖼 Logo (.png)", logo: "Organization Logo (Optional)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.<br>* Title, Org are optional/defaulted.<br>* <b style='color:var(--primary-color)'>New:</b> Move texts freely by dragging (Hold ALT).", btnAdd: "➕ Add Document", localBgBtn: "🖼 Custom BG", removeBgBtn: "🗑 Remove" },
                 types: { "Maqtov Yorlig'i": { title: "Certificate of Merit", intro: "This certificate is awarded to", role: "Rector", reason: "Student of [faculty] for outstanding achievements in education and exemplary behavior." },
                          "Tashakkurnoma": { title: "Appreciation Letter", intro: "This letter is presented to", role: "Rector", reason: "Staff member for contribution to the university's prestige and development." },
                          "Sertifikat": { title: "Certificate", intro: "This is to certify that", role: "Chairman", reason: "Has actively participated in the conference with a scientific report." } },
@@ -291,11 +299,14 @@
             document.getElementById('ui-gPersonal').innerText = ui.gPersonal;
             document.getElementById('ui-gConfirm').innerText = ui.gConfirm;
             document.getElementById('ui-gBatch').innerText = ui.gBatch;
-            document.getElementById('ui-batchHint').innerHTML = ui.batchHint;
 
             if(document.getElementById('ui-lblSeal')) document.getElementById('ui-lblSeal').innerText = ui.lblSeal;
             if(document.getElementById('ui-lblSig')) document.getElementById('ui-lblSig').innerText = ui.lblSig;
+            if(document.getElementById('ui-lblLogo')) document.getElementById('ui-lblLogo').innerText = ui.lblLogo;
+            if(document.getElementById('ui-logo')) document.getElementById('ui-logo').innerText = ui.logo;
+
             if(document.getElementById('ui-lblExcel')) document.getElementById('ui-lblExcel').innerText = ui.lblExcel;
+            if(document.getElementById('ui-batchHint')) document.getElementById('ui-batchHint').innerHTML = ui.batchHint;
             if(document.getElementById('ui-btn-addBatch')) document.getElementById('ui-btn-addBatch').innerText = ui.btnAdd;
             if(document.getElementById('ui-btn-draftSave')) document.getElementById('ui-btn-draftSave').innerText = ui.btnDraftSave;
             if(document.getElementById('ui-btn-draftLoad')) document.getElementById('ui-btn-draftLoad').innerText = ui.btnDraftLoad;
@@ -438,10 +449,14 @@
 
             const sealImg = localStorage.getItem('adu_v3_seal');
             const sigImg = localStorage.getItem('adu_v3_sig');
+            const customLogo = localStorage.getItem('adu_v3_logo');
             const globalBg = localStorage.getItem('adu_v3_bg');
             const localBgImg = data.localBg;
             const displayBg = localBgImg || globalBg;
             const nameFontCSS = data.nameFont ? `font-family: ${data.nameFont} !important;` : '';
+
+            // Resolve which logo to use (Custom vs Default ADU logo)
+            const resolvedLogo = customLogo ? customLogo : 'ADU-logoj.png';
 
             // Using data tag on element to store local custom bg
             if (localBgImg) div.dataset.localBg = localBgImg;
@@ -459,8 +474,8 @@
                     ${localBgImg ? `<button onclick="removeLocalBg(this)" class="local-bg-remove-btn">${t.removeBgBtn}</button>` : ''}
                 </div>
 
-                <div class="cert-top-logo drag-element" style="text-align: center; margin-bottom: 15px;">
-                    <img src="ADU-logoj.png" alt="University Logo" style="height: 85px; width: auto; display: inline-block; object-fit: contain;">
+                <div class="cert-top-logo drag-element" style="text-align: center; margin-bottom: 5px;">
+                    <img src="${resolvedLogo}" alt="University Logo" style="height: 125px; width: auto; display: inline-block; object-fit: contain;">
                 </div>
 
                 <div class="header drag-element">

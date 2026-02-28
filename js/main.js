@@ -195,7 +195,7 @@ window.onload = () => {
     // Initialize Nav Logo
     const navLogo = document.getElementById('nav-brand-logo');
     if (navLogo) {
-        navLogo.src = typeof DEFAULT_ADU_LOGO !== 'undefined' ? DEFAULT_ADU_LOGO : 'ADU-logoj.png';
+        navLogo.src = typeof DEFAULT_ADU_LOGO !== 'undefined' ? DEFAULT_ADU_LOGO : 'assets/img/adu_logo.png';
     }
 
     if (typeof currentLang !== 'undefined') document.getElementById('lang').value = currentLang;

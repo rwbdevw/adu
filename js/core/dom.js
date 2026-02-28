@@ -87,7 +87,7 @@ function createCertificateElement(data) {
     const displayBg = localBgImg || globalBg;
     const nameFontCSS = data.nameFont ? `font-family: ${data.nameFont} !important;` : '';
 
-    const fallbackLogo = typeof DEFAULT_ADU_LOGO !== 'undefined' ? DEFAULT_ADU_LOGO : 'ADU-logoj.png';
+    const fallbackLogo = typeof DEFAULT_ADU_LOGO !== 'undefined' ? DEFAULT_ADU_LOGO : 'assets/img/adu_logo.png';
     const resolvedLogo = customLogo ? customLogo : fallbackLogo;
 
     if (localBgImg) div.dataset.localBg = localBgImg;

@@ -157,8 +157,8 @@ function createCertificateElement(data) {
         new QRious({
             element: qrCanvas,
             value: verifyUrl,
-            size: 200,
-            level: 'M'
+            size: 300,
+            level: 'H'
         });
     } catch(e) { console.error("QR generation error:", e); }
 

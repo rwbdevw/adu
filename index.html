@@ -1197,8 +1197,10 @@
                     textEl.value = '';
                     toggleFeedbackPanel();
                 } else {
-                    const errInfo = await req.json();
-                    throw new Error(errInfo.error || l.msgErrorFetch);
+                    const errText = await req.text();
+                    let errStr = l.msgErrorFetch;
+                    try { const errObj = JSON.parse(errText); errStr = errObj.error || errStr; } catch(e) { errStr += ' ('+req.status+')'; }
+                    throw new Error(errStr);
                 }
             } catch(err) {
                 console.error(err);

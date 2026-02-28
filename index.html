@@ -255,6 +255,31 @@
     <script src="js/features/feedback.js"></script>
     <script src="js/features/theme.js"></script>
 
+    <!-- Feedback/Report Widget (Netlify/Telegram) -->
+    <div id="feedback-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Inter', sans-serif;">
+        <!-- Panel -->
+        <div id="feedback-panel" style="display: none; position: absolute; bottom: 70px; right: 0; width: 320px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); overflow: hidden; flex-direction: column;">
+            <div style="background: var(--primary-color); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center;">
+                <h3 id="lbl-feedback-title" style="margin: 0; font-size: 15px; font-weight: 600;">Taklif yoki Xato haqida xabar</h3>
+                <button onclick="toggleFeedbackPanel()" style="background: none; border: none; color: white; cursor: pointer; padding: 0;">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+                <p id="lbl-feedback-desc" style="margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.4;">Tizimda xatolik topsangiz yoki taklifingiz bo'lsa yozing. To'g'ridan-to'g'ri Dastur Muallifiga (Telegram) yetib boradi.</p>
+                <textarea id="feedback-text" rows="4" placeholder="Xabar matnini yozing..." style="width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 8px; font-family: inherit; font-size: 13px; background: var(--bg-app); color: var(--text-main); resize: none; box-sizing: border-box;"></textarea>
+                <button id="feedback-submit" onclick="sendFeedback()" style="background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; transition: opacity 0.2s; width: 100%;">✈️ Jo'natish</button>
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button id="feedback-toggle" onclick="toggleFeedbackPanel()" title="Xato yoki taklif yuborish" style="background: var(--primary-color); color: white; border: none; border-radius: 50%; width: 56px; height: 56px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; float: right;">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        </button>
+    </div>
+
+    <div id="toast-container"></div>
+
     <!-- Main Entry -->
     <script src="js/main.js"></script>
 </body>

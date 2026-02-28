@@ -26,6 +26,9 @@
             <div class="brand-title" id="ui-title">ADU Sertifikat Generatori</div>
         </div>
         <div class="nav-actions" style="display: flex; align-items: center; gap: 10px;">
+            <button onclick="toggleDarkMode()" id="btn-dark-mode" title="Tungi/Kunduzgi rejim" style="background: none; border: none; cursor: pointer; font-size: 18px; color: var(--text-muted); padding: 5px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">
+                🌙
+            </button>
             <label style="font-size: 13px; font-weight: 500; color: #64748b; margin: 0; white-space: nowrap;">Til / Язык / Language:</label>
             <select id="lang" class="lang-selector" onchange="changeLanguage()">
                 <option value="uz">🇺🇿 O'zbekcha</option>
@@ -1026,9 +1029,21 @@
                 }
             } catch (e) {}
 
+            if (localStorage.getItem('adu_v3_dark') === '1') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('btn-dark-mode').innerText = '☀️';
+            }
+
             changeLanguage();
             window.addEventListener('resize', updateScale);
         };
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('adu_v3_dark', isDark ? '1' : '0');
+            document.getElementById('btn-dark-mode').innerText = isDark ? '☀️' : '🌙';
+        }
 
         // --- GLOBAL DRAG & DROP AND AUTO-RESIZE LOGIC ---
         let activeDragElement = null;

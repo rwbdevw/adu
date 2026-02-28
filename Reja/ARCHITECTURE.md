@@ -58,8 +58,8 @@ Quyidagi tuzilmani izchil barpo etib, har bir xususiyatni o'ziga joylaymiz.
 *   [x] **Bosqich 1:** Papkalar skeletini qurish (`js/`, `assets/css/`).
 *   [x] **Bosqich 2:** CSS xajmini maydalash. Barcha CSS-larga `index.html` ga alohida ulash.
 *   [x] **Bosqich 3:** Tarjima (`i18n`) ma'lumotlar omborini aniq ajratib olish va `i18n.js` ga o'tkazish.
-*   [ ] **Bosqich 4:** Drag-drop, LocalStorage, Export logikalarini o'ziga xos modullarga ko'chirish.
-*   [ ] **Bosqich 5:** Eski `index.html` dan barcha eski `script` teglarni olib tashlab, oxirida ularni toza import qilish.
+*   [x] **Bosqich 4:** Drag-drop, LocalStorage, Export logikalarini o'ziga xos modullarga ko'chirish.
+*   [x] **Bosqich 5:** Eski `index.html` dan barcha eski `script` teglarni olib tashlab, oxirida ularni toza import qilish.
 
 **Xavfsiz Zona Qo'llanmasi (Safe Zone):**
 O'zgarishlarni har doim yangi shoxga (Branch) olib yoki Github ga ketma-ket mayda majburiyatlar (`commit`) qilgan holda bajaramiz.

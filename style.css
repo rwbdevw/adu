@@ -513,7 +513,7 @@ input[type="color"]:focus {
 .certificate.template-minimal .certificate-title { color: #0f172a; letter-spacing: 15px; font-size: 45px; margin: 40px auto; max-width: 80%; border-bottom: 1px solid #e2e8f0; padding-bottom: 30px; }
 .certificate.template-minimal .recipient-name { font-size: 50px; border-bottom: none; color: var(--accent-color); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
 .certificate.template-minimal .reason-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px; color: #475569; line-height: 2; margin-top: 40px; max-width: 75%; }
-.certificate.template-minimal .seal { border: none; filter: grayscale(1) opacity(0.08); width: 280px; height: 280px; z-index: 0; bottom: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; }
+.certificate.template-minimal .seal { left: auto; right: 100px; bottom: 30mm; border: none; font-size: 14px; opacity: 1; transform: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 .certificate.template-minimal .content { position: relative; z-index: 2; margin-top: 60px; }
 .certificate.template-minimal .signature-line { height: 30px; border-bottom: 1px solid #cbd5e1; }
 .certificate.template-minimal .footer { align-items: center; bottom: 35px; z-index: 2; }

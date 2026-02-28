@@ -55,9 +55,9 @@ Quyidagi tuzilmani izchil barpo etib, har bir xususiyatni o'ziga joylaymiz.
 
 ## 🛠 Refaktoring Bosqichlari (Tasklar)
 
-*   [ ] **Bosqich 1:** Papkalar skeletini qurish (`js/`, `assets/css/`).
-*   [ ] **Bosqich 2:** CSS xajmini maydalash. Barcha CSS-larga `index.html` ga alohida ulash.
-*   [ ] **Bosqich 3:** Tarjima (`i18n`) ma'lumotlar omborini aniq ajratib olish va `i18n.js` ga o'tkazish.
+*   [x] **Bosqich 1:** Papkalar skeletini qurish (`js/`, `assets/css/`).
+*   [x] **Bosqich 2:** CSS xajmini maydalash. Barcha CSS-larga `index.html` ga alohida ulash.
+*   [x] **Bosqich 3:** Tarjima (`i18n`) ma'lumotlar omborini aniq ajratib olish va `i18n.js` ga o'tkazish.
 *   [ ] **Bosqich 4:** Drag-drop, LocalStorage, Export logikalarini o'ziga xos modullarga ko'chirish.
 *   [ ] **Bosqich 5:** Eski `index.html` dan barcha eski `script` teglarni olib tashlab, oxirida ularni toza import qilish.
 

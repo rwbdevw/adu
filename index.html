@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Great+Vibes&family=Montserrat:wght@400;600;800&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <!-- Pre-encoded assets to bypass local file:// CORS taint inside Canvas/HTML2Canvas -->
+    <script src="logo_b64.js"></script>
     <!-- Link to our 10/10 SaaS Style -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -456,7 +458,8 @@
             const nameFontCSS = data.nameFont ? `font-family: ${data.nameFont} !important;` : '';
 
             // Resolve which logo to use (Custom vs Default ADU logo)
-            const resolvedLogo = customLogo ? customLogo : 'ADU-logoj.png';
+            const fallbackLogo = typeof DEFAULT_ADU_LOGO !== 'undefined' ? DEFAULT_ADU_LOGO : 'ADU-logoj.png';
+            const resolvedLogo = customLogo ? customLogo : fallbackLogo;
 
             // Using data tag on element to store local custom bg
             if (localBgImg) div.dataset.localBg = localBgImg;

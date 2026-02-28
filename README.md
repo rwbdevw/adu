@@ -5,6 +5,7 @@ Andijon Davlat Universiteti (ADU) uchun maxsus ishlab chiqilgan, zamonaviy va mo
 ## ✨ Xususiyatlari
 
 -   **🚀 Ommaviy Yaratish (Batch Generation):** Excel (`.xlsx`) fayli orqali yuzlab talabalar uchun bir vaqtning o'zida sertifikatlar yaratish.
+-   **⚠️ Aqlli Excel Deteksiyasi:** Excel fayli yuklanganda yetishmayotgan ustunlarni aniqlash va foydalanuvchini premium shakldagi modal oyna orqali ogohlantirish.
 -   **🔍 QR-Kodli Tekshiruv:** Har bir sertifikatda avtomatik yaratiladigan QR-kod orqali hujjatning haqiqiyligini `verify.html` sahifasi orqali tekshirish imkoniyati.
 -   **🎨 Moslashuvchan Dizayn:** 3 xil professional shablon (Klassik, Zamonaviy, Minimal) va Landscape/Portrait formatlari.
 -   **🖱️ Drag-and-Drop:** Sertifikatdagi matn va elementlar o'rnini sichqoncha yordamida erkin surish (ALT tugmasi bilan).

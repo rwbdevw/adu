@@ -1,0 +1,136 @@
+/* Modal Base */
+.adu-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.adu-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.adu-modal-content {
+    background: var(--bg-surface);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.adu-modal-overlay.show .adu-modal-content {
+    transform: translateY(0);
+}
+
+.adu-modal-header {
+    background: #fff9f0;
+    padding: 20px 24px;
+    border-bottom: 1px solid #fee2e2;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dark-mode .adu-modal-header {
+    background: #2d261e;
+    border-bottom: 1px solid #451a1a;
+}
+
+.adu-modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #9a3412;
+}
+
+.dark-mode .adu-modal-title {
+    color: #fb923c;
+}
+
+.adu-modal-body {
+    padding: 24px;
+}
+
+.adu-modal-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Sample Table */
+.adu-sample-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.adu-sample-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.adu-sample-table th {
+    background: var(--bg-app);
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.adu-sample-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.adu-sample-table tr:last-child td {
+    border-bottom: none;
+}
+
+.adu-col-highlight {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.adu-modal-footer {
+    padding: 16px 24px;
+    background: var(--bg-app);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-modal-primary {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.btn-modal-primary:hover {
+    opacity: 0.9;
+}

@@ -1,0 +1,258 @@
+/* Language Selector */
+.lang-selector {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-app);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+}
+.lang-selector:focus { border-color: var(--input-focus); box-shadow: 0 0 0 2px var(--input-ring); }
+
+/* Control Group / Card Settings */
+.control-group {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+}
+.control-group:hover {
+    box-shadow: var(--shadow-md);
+}
+.group-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.group-title i { opacity: 0.7; }
+
+/* Form Elements */
+.form-row {
+    margin-bottom: 16px;
+}
+.form-row:last-child { margin-bottom: 0; }
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-main);
+    background-color: var(--bg-surface);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+input[type="text"]::placeholder, textarea::placeholder { color: var(--text-light); }
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px var(--input-ring);
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* Two-column inputs */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Color Picker Row Alignment */
+.color-picker-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+}
+.color-picker-wrapper label { margin-bottom: 6px; }
+input[type="color"] {
+    width: 100%; height: 41px; border: 1px solid var(--input-border); padding: 4px; cursor: pointer; border-radius: 8px;
+    background: var(--bg-surface);
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; box-shadow: none; }
+input[type="color"]:hover { border-color: var(--input-focus); }
+input[type="color"]:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px var(--input-ring);
+}
+
+/* File Upload - Minimal Line Style */
+.file-upload-wrapper {
+    position: relative;
+}
+.file-upload-wrapper input[type="file"] { display: none; }
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--bg-surface);
+    border: 1px dashed var(--input-border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+.file-upload-label:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: var(--bg-surface-hover);
+}
+
+/* Excel Batch Zone Focus */
+.batch-zone {
+    background: #f0fdf4; /* Green 50 for excel feel */
+    border-color: #bbf7d0;
+}
+.batch-zone .file-upload-label {
+    background: #ffffff;
+    border-color: #86efac;
+    color: #166534;
+}
+.batch-zone .file-upload-label:hover {
+    border-color: #22c55e;
+    background: #f0fdf4;
+}
+.batch-hint {
+    font-size: 11px;
+    color: #166534;
+    margin: 8px 0 0;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Main Action Buttons (Right Top Area) */
+.action-panel {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    display: flex;
+    gap: 12px;
+    z-index: 5;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+    background: #1e293b;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.btn-secondary {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+.btn-secondary:hover {
+    background: var(--bg-surface-hover);
+}
+
+.btn-danger {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid transparent;
+}
+.btn-danger:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* Local Certificate Actions (Overlay on hover) */
+.cert-local-actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+.certificate:hover .cert-local-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+.cert-local-actions .local-bg-btn, .cert-local-actions .local-bg-remove-btn {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0,0,0,0.05);
+    padding: 6px 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    font-size: 13px;
+    color: #334155;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+.cert-local-actions .local-bg-btn:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+.cert-local-actions .local-bg-remove-btn { color: #b91c1c; background: #fee2e2; border-color: rgba(185, 28, 28, 0.1); }
+.cert-local-actions .local-bg-remove-btn:hover { background: #fecaca; }

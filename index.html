@@ -244,21 +244,21 @@
         // Data and Translation Logic
         const i18n = {
             uz: { uni: "Andijon Davlat Universiteti", city: "Andijon shahri", regLabel: "Qayd raqami", dateLabel: "Sana", namePlaceholder: "[F.I.Sh.]", signerPlaceholder: "[Rektor F.I.Sh.]",
-                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblLogo: "🖼 Logo (.png)", logo: "Tashkilot Logotipi (Ixtiyoriy)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.<br>* <b style='color:var(--primary-color)'>Yangi:</b> Matnlarni sichqonchada (yoki ALT bosib) surib joyini o'zgartirishingiz mumkin.", btnAdd: "➕ Hujjat qo'shish", localBgBtn: "🖼 Shaxsiy fon", removeBgBtn: "🗑 O'chirish" },
+                ui: { title: "ADU Sertifikat Generatori", controlHeader: "Hujjat Sozlamalari", chooseFile: "📂 Fayl...", lang: "Til", color: "Asosiy rang", batch: "Excel Bazani Yuklash", docType: "Hujjat turi", template: "Andoza (Dizayn)", name: "Qabul qiluvchi (F.I.Sh)", reason: "Sabab / Matn", reg: "Qayd raqami", date: "Sana", seal: "Muhr Yuklash", sig: "Imzo Yuklash", rector: "Imzolovchi Ismi", rectorTitle: "Imzolovchi Lavozimi", uniName: "Muassasa nomi (Ixtiyoriy)", print: "Chop etish (Print)", download: "PDF qilib saqlash", clear: "Keshni Tozalash / Reset", gVisual: "🏢 Visual Sozlamalar", gPersonal: "📝 Shaxsiy Ma'lumot", gConfirm: "✍️ Tasdiq Qismi", gBatch: "📊 Ommaviy Yaratish", btnDraftSave: "💾 Qoralamani Saqlash (.adu)", btnDraftLoad: "📂 Qoralama Yuklash", zipDownload: "ZIP Rasm Qilib Saqlash", lblSeal: "📂 Muhr (.png)", lblSig: "📂 Imzo (.png)", lblLogo: "🖼 Logo (.png)", logo: "Tashkilot Logotipi (Ixtiyoriy)", lblExcel: "Excel (.xlsx) faylini tanlang", batchHint: "Asosiy ustunlar: Ism, Sana, Reg, Matn, Rektor.<br>* Lavozim, Tashkilot kiritilmasa andozadagi olinadi.<br>* <b style='color:var(--primary-color)'>Yangi:</b> Matnlarni sichqonchada (yoki ALT bosib) surib joyini o'zgartirishingiz mumkin.", btnAdd: "➕ Hujjat qo'shish", localBgBtn: "🖼 Shaxsiy fon", removeBgBtn: "🗑 O'chirish", feedbackTitle: "Taklif yoki Xato haqida xabar", feedbackDesc: "Tizimda xatolik topsangiz yoki taklifingiz bo'lsa yozing. To'g'ridan-to'g'ri Dastur Muallifiga (Telegram) yetib boradi.", feedbackPlaceholder: "Xabar matnini yozing...", btnSend: "✈️ Jo'natish", msgEmpty: "Iltimos, xabar matnini kiriting!", msgWait: "⏳ Jo'natilmoqda...", msgSuccess: "✅ Xabaringiz muvaffaqiyatli yuborildi! Kattakon Rahmat.", msgErrorFetch: "Tarmoq xatosi yoki sozlamalar kiritilmagan", msgError: "❌ Jo'natishda xatolik: " },
                 types: { "Maqtov Yorlig'i": { title: "Maqtov Yorlig'i", intro: "Ushbu yorliq topshiriladi", role: "Rektor", reason: "[Fakultet nomi] fakulteti talabasi o‘quv jarayonlarida erishgan yuksak natijalari va namunali xulqi uchun." },
                          "Tashakkurnoma": { title: "Tashakkurnoma", intro: "Ushbu tashakkurnoma bildiriladi", role: "Rektor", reason: "[Kafedra nomi] xodimiga universitet nufuzini oshirishga qo‘shgan munosib hissasi uchun." },
                          "Sertifikat": { title: "Sertifikat", intro: "Ushbu sertifikat tasdiqlaydi", role: "Raisi", reason: "Universitetda o‘tkazilgan konferensiyada o‘zining ilmiy ma'ruzasi bilan faol ishtirok etganligini." } },
                 templates: { "klassik": "Klassik (Rasmiy)", "zamonaviy": "Zamonaviy (Gradient)", "minimal": "Minimal (Toza)" }
             },
             ru: { uni: "Андижанский Государственный Университет", city: "город Андижан", regLabel: "Рег. номер", dateLabel: "Дата", namePlaceholder: "[Ф.И.О.]", signerPlaceholder: "[Ф.И.О. Ректора]",
-                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblLogo: "🖼 Логотип (.png)", logo: "Логотип Организации (Опция)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.<br>* Должность, Организация опциональны.<br>* <b style='color:var(--primary-color)'>Новое:</b> Перемещайте текст мышью (зажав ALT).", btnAdd: "➕ Добавить документ", localBgBtn: "🖼 Личный фон", removeBgBtn: "🗑 Удалить" },
+                ui: { title: "Генератор Сертификатов АГУ", controlHeader: "Настройки документа", chooseFile: "📂 Файл...", lang: "Язык", color: "Основной цвет", batch: "Загрузить Excel", docType: "Тип документа", template: "Шаблон", name: "Ф.И.О получателя", reason: "Текст / Причина", reg: "Рег. номер", date: "Дата", seal: "Печать", sig: "Подпись", rector: "Подписант", rectorTitle: "Должность", uniName: "Организация (Опционально)", print: "Печать (Print)", download: "Сохранить в PDF", clear: "Очистить / Сброс", gVisual: "🏢 Визуальные Настройки", gPersonal: "📝 Личные Данные", gConfirm: "✍️ Часть Утверждения", gBatch: "📊 Массовое Создание", btnDraftSave: "💾 Сохранить Черновик (.adu)", btnDraftLoad: "📂 Загрузить Черновик", zipDownload: "Скачать как ZIP (Изображения)", lblSeal: "📂 Печать (.png)", lblSig: "📂 Подпись (.png)", lblLogo: "🖼 Логотип (.png)", logo: "Логотип Организации (Опция)", lblExcel: "Выберите файл Excel (.xlsx)", batchHint: "Основа: ФИО, Дата, Номер, Текст, Ректор.<br>* Должность, Организация опциональны.<br>* <b style='color:var(--primary-color)'>Новое:</b> Перемещайте текст мышью (зажав ALT).", btnAdd: "➕ Добавить документ", localBgBtn: "🖼 Личный фон", removeBgBtn: "🗑 Удалить", feedbackTitle: "Сообщить об ошибке / Предложение", feedbackDesc: "Напишите, если найдете ошибку или у вас есть предложение. Сообщение будет доставлено напрямую Разработчику (Telegram).", feedbackPlaceholder: "Текст сообщения...", btnSend: "✈️ Отправить", msgEmpty: "Пожалуйста, введите текст сообщения!", msgWait: "⏳ Отправка...", msgSuccess: "✅ Ваше сообщение успешно отправлено! Большое спасибо.", msgErrorFetch: "Ошибка сети или не настроено", msgError: "❌ Ошибка при отправке: " },
                 types: { "Maqtov Yorlig'i": { title: "Похвальная грамота", intro: "Награждается", role: "Ректор", reason: "Студент [факультета] за высокие достижения в учебном процессе и образцовое поведение." },
                          "Tashakkurnoma": { title: "Благодарственное письмо", intro: "Выражается благодарность", role: "Ректор", reason: "Сотруднику [отдела] за достойный вклад в повышение престижа университета." },
                          "Sertifikat": { title: "Сертификат", intro: "Настоящий сертификат подтверждает", role: "Председатель", reason: "Активное участие в конференции со своим научным докладом." } },
                 templates: { "klassik": "Классический (Офиц.)", "zamonaviy": "Современный", "minimal": "Минималистичный" }
             },
             en: { uni: "Andijan State University", city: "Andijan city", regLabel: "Reg. No", dateLabel: "Date", namePlaceholder: "[Full Name]", signerPlaceholder: "[Signer Name]",
-                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblLogo: "🖼 Logo (.png)", logo: "Organization Logo (Optional)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.<br>* Title, Org are optional/defaulted.<br>* <b style='color:var(--primary-color)'>New:</b> Move texts freely by dragging (Hold ALT).", btnAdd: "➕ Add Document", localBgBtn: "🖼 Custom BG", removeBgBtn: "🗑 Remove" },
+                ui: { title: "ASU Certificate Generator", controlHeader: "Document Settings", chooseFile: "📂 File...", lang: "Language", color: "Main Color", batch: "Upload Excel Data", docType: "Doc Type", template: "Design Template", name: "Recipient Name", reason: "Reason Text", reg: "Reg. No", date: "Date", seal: "Upload Seal", sig: "Upload Sign", rector: "Signer Name", rectorTitle: "Signer Title", uniName: "Organization (Optional)", print: "Print Document", download: "Save as PDF", clear: "Clear Cache / Reset", gVisual: "🏢 Visual Settings", gPersonal: "📝 Personal Info", gConfirm: "✍️ Approval Section", gBatch: "📊 Batch Generation", btnDraftSave: "💾 Save Draft (.adu)", btnDraftLoad: "📂 Load Draft", zipDownload: "Download as ZIP (Images)", lblSeal: "📂 Seal (.png)", lblSig: "📂 Signature (.png)", lblLogo: "🖼 Logo (.png)", logo: "Organization Logo (Optional)", lblExcel: "Select Excel (.xlsx) file", batchHint: "Required: Name, Date, Reg, Reason, Signer.<br>* Title, Org are optional/defaulted.<br>* <b style='color:var(--primary-color)'>New:</b> Move texts freely by dragging (Hold ALT).", btnAdd: "➕ Add Document", localBgBtn: "🖼 Custom BG", removeBgBtn: "🗑 Remove", feedbackTitle: "Report a Bug or Suggestion", feedbackDesc: "Please report bugs or suggest ideas. Message goes directly to the Developer (Telegram).", feedbackPlaceholder: "Type your message...", btnSend: "✈️ Send", msgEmpty: "Please enter your message!", msgWait: "⏳ Sending...", msgSuccess: "✅ Your message has been sent! Thank you.", msgErrorFetch: "Network error or unconfigured", msgError: "❌ Failed to send: " },
                 types: { "Maqtov Yorlig'i": { title: "Certificate of Merit", intro: "This certificate is awarded to", role: "Rector", reason: "Student of [faculty] for outstanding achievements in education and exemplary behavior." },
                          "Tashakkurnoma": { title: "Appreciation Letter", intro: "This letter is presented to", role: "Rector", reason: "Staff member for contribution to the university's prestige and development." },
                          "Sertifikat": { title: "Certificate", intro: "This is to certify that", role: "Chairman", reason: "Has actively participated in the conference with a scientific report." } },
@@ -357,6 +357,13 @@
             for(let key in i18n) {
                 if(uniInput.value === i18n[key].uni) { uniInput.value = l.uni; break; }
             }
+
+            // Update Feedback translations
+            document.getElementById('lbl-feedback-title').innerText = l.ui.feedbackTitle;
+            document.getElementById('lbl-feedback-desc').innerText = l.ui.feedbackDesc;
+            document.getElementById('feedback-text').placeholder = l.ui.feedbackPlaceholder;
+            const btnFeed = document.getElementById('feedback-submit');
+            if(btnFeed.innerHTML.includes('✈️')) btnFeed.innerHTML = l.ui.btnSend;
 
             updateTemplate();
         }
@@ -1136,13 +1143,13 @@
         <!-- Panel -->
         <div id="feedback-panel" style="display: none; position: absolute; bottom: 70px; right: 0; width: 320px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); overflow: hidden; flex-direction: column;">
             <div style="background: var(--primary-color); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Taklif yoki Xato haqida xabar</h2>
+                <h3 id="lbl-feedback-title" style="margin: 0; font-size: 15px; font-weight: 600;">Taklif yoki Xato haqida xabar</h3>
                 <button onclick="toggleFeedbackPanel()" style="background: none; border: none; color: white; cursor: pointer; padding: 0;">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             <div style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
-                <p style="margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.4;">Tizimda xatolik topsangiz yoki taklifingiz bo'lsa yozing. To'g'ridan-to'g'ri Dastur Muallifiga (Telegram) yetib boradi.</p>
+                <p id="lbl-feedback-desc" style="margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.4;">Tizimda xatolik topsangiz yoki taklifingiz bo'lsa yozing. To'g'ridan-to'g'ri Dastur Muallifiga (Telegram) yetib boradi.</p>
                 <textarea id="feedback-text" rows="4" placeholder="Xabar matnini yozing..." style="width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 8px; font-family: inherit; font-size: 13px; background: var(--bg-app); color: var(--text-main); resize: none; box-sizing: border-box;"></textarea>
                 <button id="feedback-submit" onclick="sendFeedback()" style="background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; transition: opacity 0.2s; width: 100%;">✈️ Jo'natish</button>
             </div>
@@ -1166,14 +1173,15 @@
         }
 
         async function sendFeedback() {
+            const l = i18n[currentLang].ui;
             const textEl = document.getElementById('feedback-text');
             const btn = document.getElementById('feedback-submit');
             const text = textEl.value.trim();
 
-            if(!text) return alert("Iltimos, xabar matnini kiriting!");
+            if(!text) return alert(l.msgEmpty);
 
             btn.disabled = true;
-            btn.innerHTML = '⏳ Jo\'natilmoqda...';
+            btn.innerHTML = l.msgWait;
             btn.style.opacity = '0.7';
 
             try {
@@ -1185,19 +1193,19 @@
                 });
 
                 if(req.ok) {
-                    alert("✅ Xabaringiz muvaffaqiyatli yuborildi! Kattakon Rahmat.");
+                    alert(l.msgSuccess);
                     textEl.value = '';
                     toggleFeedbackPanel();
                 } else {
                     const errInfo = await req.json();
-                    throw new Error(errInfo.error || "Tarmoq xatosi yoki sozlamalar kiritilmagan");
+                    throw new Error(errInfo.error || l.msgErrorFetch);
                 }
             } catch(err) {
                 console.error(err);
-                alert("❌ Jo'natishda xatolik: " + err.message);
+                alert(l.msgError + err.message);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '✈️ Jo\'natish';
+                btn.innerHTML = l.btnSend;
                 btn.style.opacity = '1';
             }
         }

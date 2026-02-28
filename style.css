@@ -364,7 +364,7 @@ input[type="color"]:focus {
 }
 
 .btn-secondary {
-    background: white;
+    background: var(--bg-surface);
     color: var(--text-main);
     border-color: var(--border-color);
     box-shadow: var(--shadow-sm);

@@ -1172,31 +1172,16 @@
 
             if(!text) return alert("Iltimos, xabar matnini kiriting!");
 
-            // ======= TELEGRAM BOT SETTINGS ======= //
-            // TODO: PASTGA O'ZINGIZNING BOT TOKEN VA CHAT ID RAKAMINGIZNI YOZING!
-            const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE';
-            const CHAT_ID = 'YOUR_CHAT_ID_HERE';
-            // ===================================== //
-
-            if(BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
-                return alert("Tizim sozlanmagan! Dasturchi index.html ichiga BOT_TOKEN va CHAT_ID kiritishi kerak.");
-            }
-
-            const msg = `📬 Yangi Xabar (ADU Sertifikat):\n\n${text}`;
-
             btn.disabled = true;
             btn.innerHTML = '⏳ Jo\'natilmoqda...';
             btn.style.opacity = '0.7';
 
             try {
-                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-                const req = await fetch(url, {
+                // Call the Netlify Serverless Function instead of exposing Telegram keys
+                const req = await fetch('/.netlify/functions/feedback', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: msg
-                    })
+                    body: JSON.stringify({ text: text })
                 });
 
                 if(req.ok) {
@@ -1205,7 +1190,7 @@
                     toggleFeedbackPanel();
                 } else {
                     const errInfo = await req.json();
-                    throw new Error(errInfo.description || "Tarmoq xatosi");
+                    throw new Error(errInfo.error || "Tarmoq xatosi yoki sozlamalar kiritilmagan");
                 }
             } catch(err) {
                 console.error(err);
